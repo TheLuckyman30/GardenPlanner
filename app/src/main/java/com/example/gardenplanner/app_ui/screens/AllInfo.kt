@@ -5,8 +5,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
 @Composable
-fun Dashboard() {
+fun AllInfo() {
     Column {
-        Text(text = "This is the Dashboard")
+        Text(text = "This is the All Plant Info Page")
     }
 }

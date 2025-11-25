@@ -5,11 +5,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 
 @Composable
-fun LandingPage(navigate: () -> Unit) {
+fun LandingPage() {
     Column {
         Text(text = "This is the Landing Page")
-        Button(onClick = navigate) {
-            Text(text = "Go to Dashboard")
-        }
     }
 }
