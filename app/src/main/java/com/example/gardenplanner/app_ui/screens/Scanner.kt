@@ -1,7 +1,6 @@
 package com.example.gardenplanner.app_ui.screens
 
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,23 +25,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.gardenplanner.app_ui.components.CameraBox
-import com.example.gardenplanner.utils.helpers.TextRecognitionHelper
 
 @Composable
 fun Scanner() {
     var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val context = LocalContext.current
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        selectedImageUri = uri
-        uri?.let {
-            TextRecognitionHelper.recognizeTextFromUri(context, uri) { result ->
-                recognizedText = result
-            }
-        }
-    }
     val cameraPermissionState = remember { mutableStateOf(false) }
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -80,14 +66,6 @@ fun Scanner() {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button (
-                onClick = { galleryLauncher.launch("image/*") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text("Select Image from Gallery")
-            }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = recognizedText,
