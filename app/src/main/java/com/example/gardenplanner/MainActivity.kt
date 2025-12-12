@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -12,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
+import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Screen
 
@@ -25,6 +27,7 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     topBar = {
+
                         Navbar(
                             modifier = Modifier.padding(top = 16.dp),
                             navDashboard = { currentScreen = Screen.Dashboard },
@@ -49,6 +52,21 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+
+
+                Row {
+                    Sidebar(
+                        navDashboard = { currentScreen = Screen.Dashboard },
+                        navScanner = { currentScreen = Screen.SeedScanner },
+                        navIndividual = { currentScreen = Screen.IndividualInfoPage },
+                        navAll = { currentScreen = Screen.AllInfoPage },
+                        navNotifs = { currentScreen = Screen.NotificationsPage },
+                        navPlot = { currentScreen = Screen.PlotterPage }
+                    )
+                }
+
+
+
             }
         }
     }
