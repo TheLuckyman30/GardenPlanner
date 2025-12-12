@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -70,11 +71,8 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
     }
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .border(2.dp, Color.Gray, RoundedCornerShape(16.dp))
+            .fillMaxHeight()
             .clip(RoundedCornerShape(16.dp))
-            .aspectRatio(1f)
-            .background(Color.Black)
     ) {
         AndroidView(
             factory = { previewView },

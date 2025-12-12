@@ -50,9 +50,7 @@ fun Scanner() {
     }
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .padding(16.dp)) {
+            .fillMaxSize()) {
             if (cameraPermissionState.value) {
                 CameraBox {
                     recognizedText = it
@@ -65,15 +63,6 @@ fun Scanner() {
                     Text("Camera permission is required to use this feature.")
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = recognizedText,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
         }
     }
 }
