@@ -10,8 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
+import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Screen
 
@@ -22,16 +22,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
+                var sidebarOpen by remember { mutableStateOf(false) }
 
                 Scaffold(
                     topBar = {
                         Navbar (
-                            navDashboard = { currentScreen = Screen.Dashboard },
-                            navScanner = { currentScreen = Screen.SeedScanner },
-                            navIndividual = { currentScreen = Screen.IndividualInfoPage },
                             navAll = { currentScreen = Screen.AllInfoPage },
-                            navNotifs = { currentScreen = Screen.NotificationsPage },
-                            navPlot = { currentScreen = Screen.PlotterPage }
+                            navPlot = { currentScreen = Screen.PlotterPage },
+                            openSidebar = { sidebarOpen = true }
                         )
                     }
                 )
@@ -47,6 +45,10 @@ class MainActivity : ComponentActivity() {
                             Screen.PlotterPage -> Plotter()
                         }
                     }
+                }
+
+                if (sidebarOpen) {
+                    Sidebar(closeSidebar = { sidebarOpen = false })
                 }
             }
         }

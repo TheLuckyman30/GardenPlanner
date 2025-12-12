@@ -25,12 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Navbar(navDashboard: () -> Unit,
-           navScanner: () -> Unit,
-           navIndividual: () -> Unit,
-           navAll: () -> Unit,
-           navNotifs: () -> Unit,
-           navPlot: () -> Unit) {
+fun Navbar(navAll: () -> Unit,
+           navPlot: () -> Unit,
+           openSidebar: () -> Unit) {
     FlowRow(modifier = Modifier
         .fillMaxWidth()
         .background(color = Color(0xFF294A42))
@@ -42,7 +39,7 @@ fun Navbar(navDashboard: () -> Unit,
             .background(Color.Transparent),
             contentAlignment = Alignment.Center) {
             Row {
-                IconButton(onClick = {},
+                IconButton(onClick = openSidebar ,
                     modifier = Modifier
                         .absolutePadding(right = 10.dp)
                         .width(50.22122.dp)
