@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -46,9 +49,14 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
-
-                if (sidebarOpen) {
-                    Sidebar(closeSidebar = { sidebarOpen = false })
+                AnimatedVisibility(
+                    visible = sidebarOpen,
+                    enter = slideInHorizontally { fullWidth -> -fullWidth },
+                    exit = slideOutHorizontally { fullWidth -> -fullWidth * 2 }
+                ) {
+                    Sidebar(
+                        closeSidebar = { sidebarOpen = false },
+                        navScanner = { currentScreen = Screen.SeedScanner })
                 }
             }
         }
