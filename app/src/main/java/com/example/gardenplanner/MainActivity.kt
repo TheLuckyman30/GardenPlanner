@@ -25,8 +25,7 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     topBar = {
-                        Navbar(
-                            modifier = Modifier.padding(top = 16.dp),
+                        Navbar (
                             navDashboard = { currentScreen = Screen.Dashboard },
                             navScanner = { currentScreen = Screen.SeedScanner },
                             navIndividual = { currentScreen = Screen.IndividualInfoPage },
