@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LandingPage(innerPadding: PaddingValues) {
+fun LandingPage(innerPadding: PaddingValues,
+                openLogin: () -> Unit,
+                openSignup: () -> Unit) {
     val gradientColors = listOf(Color(0xFF294A42), Color(0xFF2F7564))
 
     Box(modifier = Modifier
@@ -63,7 +65,7 @@ fun LandingPage(innerPadding: PaddingValues) {
                     )
                     Column {
                         TextButton (
-                            onClick = {},
+                            onClick = openLogin,
                             modifier = Modifier
                                 .width(299.dp)
                                 .background(color = Color(0xFF9CC7B9), shape = RoundedCornerShape(size = 200.dp))
@@ -81,7 +83,7 @@ fun LandingPage(innerPadding: PaddingValues) {
                         }
                         Spacer(modifier = Modifier.height(30.dp))
                         TextButton (
-                            onClick = {},
+                            onClick = openSignup,
                             modifier = Modifier
                                 .width(299.dp)
                                 .background(color = Color(0xFF9CC7B9), shape = RoundedCornerShape(size = 200.dp))

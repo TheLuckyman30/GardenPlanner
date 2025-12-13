@@ -54,7 +54,11 @@ class MainActivity : ComponentActivity() {
                         else innerPadding)
                     ) {
                         when (currentScreen) {
-                            Screen.LandingPage -> LandingPage(innerPadding)
+                            Screen.LandingPage -> LandingPage(
+                                innerPadding = innerPadding,
+                                openLogin = { currentPopup = Popup.Login },
+                                openSignup = { currentPopup = Popup.Signup }
+                            )
                             Screen.Dashboard -> Dashboard()
                             Screen.SeedScanner -> Scanner()
                             Screen.IndividualInfoPage -> IndividualInfo()
