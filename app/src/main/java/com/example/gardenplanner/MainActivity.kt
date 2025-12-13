@@ -56,7 +56,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Sidebar(
                         closeSidebar = { sidebarOpen = false },
-                        navScanner = { currentScreen = Screen.SeedScanner })
+                        navScanner = { currentScreen = Screen.SeedScanner },
+                        navNotifications = { currentScreen = Screen.NotificationsPage },
+                        navAllPlants = { currentScreen = Screen.AllInfoPage },
+                        navPlotter = { currentScreen = Screen.PlotterPage },
+                        navDashboard = { currentScreen = Screen.Dashboard })
                 }
             }
         }

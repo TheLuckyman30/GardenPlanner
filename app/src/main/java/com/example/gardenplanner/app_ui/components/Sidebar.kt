@@ -3,6 +3,7 @@ package com.example.gardenplanner.app_ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,7 +32,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Sidebar(closeSidebar: () -> Unit,
-            navScanner: () -> Unit) {
+            navScanner: () -> Unit,
+            navNotifications: () -> Unit,
+            navAllPlants: () -> Unit,
+            navPlotter: () -> Unit,
+            navDashboard: () -> Unit) {
     ModalDrawerSheet (
         modifier = Modifier
             .width(150.dp)
@@ -67,10 +72,13 @@ fun Sidebar(closeSidebar: () -> Unit,
             }
         }
         Spacer(modifier = Modifier.height(24.dp))
-        Box(modifier = Modifier
+        Column (modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(color = Color(0xFF9CC7B9))
+            .background(
+                color = Color(0xFF9CC7B9),
+                shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
+            )
         ) {
             Box(modifier = Modifier
                 .fillMaxWidth()
@@ -97,6 +105,40 @@ fun Sidebar(closeSidebar: () -> Unit,
                     )
                 }
             }
+
+            NavigationDrawerItem(
+                onClick = navNotifications,
+                label = { Text("Notifications", style = navItemsStyle()) },
+                selected = false
+            )
+            HorizontalDivider(color = Color(0xFF273B4A))
+            NavigationDrawerItem(
+                onClick = navAllPlants,
+                label = { Text("Plants", style = navItemsStyle()) },
+                selected = false
+            )
+            HorizontalDivider(color = Color(0xFF273B4A))
+            NavigationDrawerItem(
+                onClick = navPlotter,
+                label = { Text("Garden Plots", style = navItemsStyle()) },
+                selected = false
+            )
+            HorizontalDivider(color = Color(0xFF273B4A))
+            NavigationDrawerItem(
+                onClick = navDashboard,
+                label = { Text("Dashboard", style = navItemsStyle()) },
+                selected = false
+            )
+            HorizontalDivider(color = Color(0xFF273B4A))
         }
     }
 }
+
+@Composable
+fun navItemsStyle() =
+    TextStyle(
+        fontSize = 15.sp,
+        lineHeight = 20.sp,
+        fontWeight = FontWeight(400),
+        color = Color(0xFF273B4A),
+        letterSpacing = 0.15.sp)
