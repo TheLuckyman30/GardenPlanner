@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -44,6 +45,15 @@ fun CameraConfirm(close: () -> Unit,
                 addUserPlant,
                 setSelectedPlant)
             }
+        )
+    } else {
+        CustomPopup(
+            popupWidth = 250F,
+            popupHeight = 250F,
+            bgColor = Color(0xFF9CC7B9),
+            onClickOutside = close,
+            padding = 5F,
+            content = { RejectContent(close) }
         )
     }
 }
@@ -86,7 +96,7 @@ fun CameraConfirmContent(navIndividual: () -> Unit,
                 .clickable(onClick = { resetExtractedPlant(); close() }),
                 contentAlignment = Alignment.Center
             ) {
-                Text("Scan",
+                Text("Re-Scan",
                     style = TextStyle(
                         fontSize = 12.64.sp,
                         fontWeight = FontWeight(500),
@@ -100,10 +110,44 @@ fun CameraConfirmContent(navIndividual: () -> Unit,
                 .height(31.85.dp)
                 .background(color = Color(0xFF2F7564), shape = RoundedCornerShape(size = 16.85.dp))
                 .padding(start = 8.425.dp, top = 8.425.dp, end = 8.425.dp, bottom = 8.425.dp)
-                .clickable(onClick = { addUserPlant(); setSelectedPlant(); resetExtractedPlant(); navIndividual() }),
+                .clickable(onClick = { close(); addUserPlant(); setSelectedPlant(); resetExtractedPlant(); navIndividual() }),
                 contentAlignment = Alignment.Center
             ) {
                 Text("See Info",
+                    style = TextStyle(
+                        fontSize = 12.64.sp,
+                        fontWeight = FontWeight(500),
+                        color = Color(0xFFFFFFFF)
+                    )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun RejectContent(close: () -> Unit,) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text("Could Not Identify Plant!", modifier = Modifier
+            .align(Alignment.Center),
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontWeight = FontWeight(800),
+                color = Color(0xFF273B4A),
+                textAlign = TextAlign.Center,
+                letterSpacing = 0.17.sp
+            )
+        )
+        Row(modifier = Modifier.align(Alignment.BottomCenter)) {
+            Box(modifier = Modifier
+                .fillMaxWidth(0.5F)
+                .height(31.85.dp)
+                .background(color = Color(0xFF2F7564), shape = RoundedCornerShape(size = 16.85.dp))
+                .padding(start = 8.425.dp, top = 8.425.dp, end = 8.425.dp, bottom = 8.425.dp)
+                .clickable(onClick = close),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Try Again",
                     style = TextStyle(
                         fontSize = 12.64.sp,
                         fontWeight = FontWeight(500),

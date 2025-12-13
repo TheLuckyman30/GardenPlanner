@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 // State Variables
-                var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
+                var recognizedText by remember { mutableStateOf("") }
                 var extractedPlant by remember { mutableStateOf<Plant?>(null) }
                 var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
                 var selectedPlant by remember { mutableStateOf<Plant?>(null) }
@@ -135,9 +135,7 @@ class MainActivity : ComponentActivity() {
                         extractedPlant = DefaultPlantsAdvice.firstOrNull { plant ->
                             text.any { t -> t.lowercase().trim() == plant.name.lowercase() }
                         }
-                        if (extractedPlant != null) {
-                            currentPopup = Popup.CameraConfirm
-                        }
+                        currentPopup = Popup.CameraConfirm
                     }
                 }
             }
