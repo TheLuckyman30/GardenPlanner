@@ -15,7 +15,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
+import com.example.gardenplanner.app_ui.components.popups.Login
+import com.example.gardenplanner.app_ui.components.popups.Profile
+import com.example.gardenplanner.app_ui.components.popups.Signup
 import com.example.gardenplanner.app_ui.screens.*
+import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
 
 class MainActivity : ComponentActivity() {
@@ -25,14 +29,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
+                var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
 
                 Scaffold(
                     topBar = {
                         Navbar (
                             navAll = { currentScreen = Screen.AllInfoPage },
+                            navDashboard = { currentScreen = Screen.Dashboard },
                             navPlot = { currentScreen = Screen.PlotterPage },
-                            openSidebar = { sidebarOpen = true }
+                            openSidebar = { sidebarOpen = true },
+                            openProfile = { currentPopup = Popup.Profile }
                         )
                     }
                 )
@@ -61,6 +68,24 @@ class MainActivity : ComponentActivity() {
                         navAllPlants = { currentScreen = Screen.AllInfoPage },
                         navPlotter = { currentScreen = Screen.PlotterPage },
                         navDashboard = { currentScreen = Screen.Dashboard })
+                }
+
+                // Pop-Ups
+                when(currentPopup) {
+                    null -> null
+                    Popup.Login -> Login(
+                        close = { currentPopup = null },
+                        navDashboard = { currentScreen = Screen.Dashboard; currentPopup = null },
+                        openSignUp = { currentPopup = Popup.Signup }
+                    )
+                    Popup.Signup -> Signup(
+                        close = { currentPopup = null },
+                        navDashboard = { currentScreen = Screen.Dashboard; currentPopup = null }
+                    )
+                    Popup.Profile -> Profile(
+                        close = { currentPopup = null },
+                        navLandingPage = { currentScreen = Screen.LandingPage; currentPopup = null }
+                    )
                 }
             }
         }
