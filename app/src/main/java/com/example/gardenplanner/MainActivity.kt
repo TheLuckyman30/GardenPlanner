@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.components.popups.CustomPopup
+import com.example.gardenplanner.app_ui.components.popups.Login
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Screen
 
@@ -65,6 +66,9 @@ class MainActivity : ComponentActivity() {
                         navPlotter = { currentScreen = Screen.PlotterPage },
                         navDashboard = { currentScreen = Screen.Dashboard })
                 }
+
+                // Pop-Ups
+                Login()
             }
         }
     }
