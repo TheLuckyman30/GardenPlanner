@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
+import com.example.gardenplanner.app_ui.components.popups.CameraConfirm
 import com.example.gardenplanner.app_ui.components.popups.Login
 import com.example.gardenplanner.app_ui.components.popups.Profile
 import com.example.gardenplanner.app_ui.components.popups.Signup
@@ -33,13 +34,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme {
+                // State Variables
                 var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
+                var extractedPlant by remember { mutableStateOf<Plant?>(null) }
                 var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
                 var selectedPlant by remember { mutableStateOf<Plant?>(null) }
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
 
+                ////////////////////////////////////////////////////////////////////////////////////
+
+                // Main App
                 Scaffold(
                     topBar = {
                         if (currentScreen != Screen.LandingPage) {
@@ -78,6 +84,10 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+
+                ////////////////////////////////////////////////////////////////////////////////////
+
+                // Sidebar
                 AnimatedVisibility(
                     visible = sidebarOpen,
                     enter = slideInHorizontally { fullWidth -> -fullWidth },
@@ -108,16 +118,25 @@ class MainActivity : ComponentActivity() {
                         close = { currentPopup = null },
                         navLandingPage = { currentScreen = Screen.LandingPage; currentPopup = null }
                     )
+                    Popup.CameraConfirm -> CameraConfirm(
+                        close = { currentPopup = null },
+                        extractedPlant,
+                        resetExtractedPlant = { extractedPlant = null },
+                        setSelectedPlant = { selectedPlant = extractedPlant },
+                        addUserPlant = { userPlants += extractedPlant as Plant },
+                        navIndividual = { currentScreen = Screen.IndividualInfoPage }
+                    )
                 }
 
+                // Effects (Similar to useEffect if you used React before)
                 LaunchedEffect(recognizedText) {
                     if (recognizedText != "") {
                         val text = recognizedText.split("\n")
-                        val extractedPlant = DefaultPlantsAdvice.firstOrNull { plant ->
+                        extractedPlant = DefaultPlantsAdvice.firstOrNull { plant ->
                             text.any { t -> t.lowercase().trim() == plant.name.lowercase() }
                         }
                         if (extractedPlant != null) {
-                            userPlants += extractedPlant
+                            currentPopup = Popup.CameraConfirm
                         }
                     }
                 }
