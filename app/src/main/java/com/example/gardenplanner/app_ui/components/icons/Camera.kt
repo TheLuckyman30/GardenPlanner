@@ -12,8 +12,8 @@ val Camera: ImageVector
 
         _Camera = ImageVector.Builder(
             name = "Camera",
-            defaultWidth = 28.dp,
-            defaultHeight = 28.dp,
+            defaultWidth = 50.dp,
+            defaultHeight = 50.dp,
             viewportWidth = 16f,
             viewportHeight = 16f
         ).apply {

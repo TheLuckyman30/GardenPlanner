@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
@@ -115,8 +117,10 @@ fun CameraBox(setLoading: () -> Unit,
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .height(100.dp)
+                .width(100.dp)
                 .padding(12.dp)
-                .background(Color.LightGray, RoundedCornerShape(360.dp))
+                .background(Color.White, RoundedCornerShape(360.dp))
         ) {
             Icon(imageVector = Camera, contentDescription = "Camera")
         }
