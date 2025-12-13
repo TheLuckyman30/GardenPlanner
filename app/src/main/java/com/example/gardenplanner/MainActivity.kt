@@ -1,6 +1,7 @@
 package com.example.gardenplanner
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme {
+                var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
@@ -60,7 +62,10 @@ class MainActivity : ComponentActivity() {
                                 openSignup = { currentPopup = Popup.Signup }
                             )
                             Screen.Dashboard -> Dashboard()
-                            Screen.SeedScanner -> Scanner()
+                            Screen.SeedScanner -> Scanner(
+                                recognizedText,
+                                updateText = { newText -> recognizedText = newText }
+                            )
                             Screen.IndividualInfoPage -> IndividualInfo()
                             Screen.AllInfoPage -> AllInfo()
                             Screen.NotificationsPage -> Notifications()
@@ -98,6 +103,10 @@ class MainActivity : ComponentActivity() {
                         close = { currentPopup = null },
                         navLandingPage = { currentScreen = Screen.LandingPage; currentPopup = null }
                     )
+                }
+
+                LaunchedEffect(recognizedText) {
+                    Log.d("Test", "Text: ${recognizedText.split("\n")}")
                 }
             }
         }

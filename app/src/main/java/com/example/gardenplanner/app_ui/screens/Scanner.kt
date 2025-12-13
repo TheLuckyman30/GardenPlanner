@@ -30,8 +30,8 @@ import com.example.gardenplanner.app_ui.components.CameraBox
 import com.example.gardenplanner.utils.helpers.TextRecognitionHelper
 
 @Composable
-fun Scanner() {
-    var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
+fun Scanner(recognizedText: String,
+            updateText: (String) -> Unit) {
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     val context = LocalContext.current
     val galleryLauncher = rememberLauncherForActivityResult(
@@ -40,7 +40,7 @@ fun Scanner() {
         selectedImageUri = uri
         uri?.let {
             TextRecognitionHelper.recognizeTextFromUri(context, uri) { result ->
-                recognizedText = result
+                updateText(result)
             }
         }
     }
@@ -68,8 +68,8 @@ fun Scanner() {
             .padding(innerPadding)
             .padding(16.dp)) {
             if (cameraPermissionState.value) {
-                CameraBox {
-                    recognizedText = it
+                CameraBox { newText ->
+                    updateText(newText)
                 }
             } else {
                 Box(
