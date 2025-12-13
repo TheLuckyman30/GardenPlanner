@@ -1,18 +1,24 @@
 package com.example.gardenplanner.app_ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import com.example.gardenplanner.utils.classes.Plants
+import androidx.compose.ui.Modifier
+import com.example.gardenplanner.app_ui.components.PlantCard
+import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
+import com.example.gardenplanner.utils.classes.Plant
 
 @Composable
-fun AllInfo(userPlants: List<Plants>) {
-    Column {
-        userPlants.forEach { plant ->
-            Text(text = plant.name)
-            Text(text = plant.harvestTime.toString())
-            Text(text = plant.wateringInterval.toString())
-            Text(text = plant.summary)
+fun AllInfo(userPlants: List<Plant>) {
+    Surface(modifier = Modifier
+        .fillMaxSize()
+    ) {
+        FlowRow (modifier = Modifier
+            .fillMaxSize()
+        ) {
+            PlantCard(DefaultPlantsAdvice[0])
         }
     }
 }

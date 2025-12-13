@@ -1,7 +1,6 @@
 package com.example.gardenplanner
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -25,7 +24,7 @@ import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
 import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
-import com.example.gardenplanner.utils.classes.Plants
+import com.example.gardenplanner.utils.classes.Plant
 import kotlin.collections.emptyList
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +34,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
-                var userPlants by remember { mutableStateOf(emptyList<Plants>()) }
+                var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }

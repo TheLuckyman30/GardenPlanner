@@ -1,6 +1,6 @@
 package com.example.gardenplanner.utils.classes
 
-data class Plants (
+data class Plant (
     val name: String,
     val sunlight: String,
     val wateringInterval: Int,
@@ -9,14 +9,14 @@ data class Plants (
 )
 
 val DefaultPlantsAdvice = listOf(
-    Plants(
+    Plant(
         name = "Tomato",
         wateringInterval = 2,
         harvestTime = 75,
         sunlight = "Full",
         summary = "Plant in full sun, water consistently, stake or cage early, and prune lower leaves to improve airflow."
     ),
-    Plants(
+    Plant(
         name = "Corn",
         wateringInterval = 3,
         harvestTime = 90,
