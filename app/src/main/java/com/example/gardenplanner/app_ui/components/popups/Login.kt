@@ -37,7 +37,9 @@ fun Login(close: () -> Unit,
         popupHeight = 355F,
         onClickOutside = close,
         bgColor = Color(0xFF9CC7B9),
-        content = { LoginContent(openSignUp, navDashboard) })
+        padding = 5F,
+        content = { LoginContent(openSignUp, navDashboard) }
+    )
 }
 
 @Composable

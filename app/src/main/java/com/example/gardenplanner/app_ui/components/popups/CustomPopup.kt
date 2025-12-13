@@ -19,7 +19,8 @@ fun CustomPopup(
     popupHeight: Float,
     bgColor: Color,
     onClickOutside: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    padding: Float
 ) {
     Dialog (onDismissRequest = onClickOutside) {
         Box(
@@ -28,7 +29,7 @@ fun CustomPopup(
                 .height(popupHeight.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(bgColor)
-                .padding(5.dp)
+                .padding(padding.dp)
         ) {
             content()
         }

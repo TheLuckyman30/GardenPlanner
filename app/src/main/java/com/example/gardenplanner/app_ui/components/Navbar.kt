@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -68,7 +68,7 @@ fun Navbar(navAll: () -> Unit,
                         .height(49.01075.dp)
                         .background(color = Color(0xFF9CC7B9), shape = RoundedCornerShape(size = 360.dp))
                 ) {
-                    Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Menu", tint = Color.White)
+                    Icon(imageVector = Icons.Default.Person, contentDescription = "Menu", tint = Color.White)
                 }
             }
 

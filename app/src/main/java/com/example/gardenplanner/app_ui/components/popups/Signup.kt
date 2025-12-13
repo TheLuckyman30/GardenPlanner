@@ -36,6 +36,7 @@ fun Signup(close: () -> Unit,
         popupHeight = 505F,
         onClickOutside = close,
         bgColor = Color(0xFF9CC7B9),
+        padding = 5F,
         content = { SignupContent(navDashboard) })
 }
 

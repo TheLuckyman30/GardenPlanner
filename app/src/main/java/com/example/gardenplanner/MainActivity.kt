@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.components.popups.Login
+import com.example.gardenplanner.app_ui.components.popups.Profile
 import com.example.gardenplanner.app_ui.components.popups.Signup
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Popup
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
-                var currentPopup by remember { mutableStateOf<Popup?>(Popup.Login) }
+                var currentPopup by remember { mutableStateOf<Popup?>(Popup.Profile) }
                 var sidebarOpen by remember { mutableStateOf(false) }
 
                 Scaffold(
@@ -79,6 +80,9 @@ class MainActivity : ComponentActivity() {
                     Popup.Signup -> Signup(
                         close = { currentPopup = null },
                         navDashboard = { currentScreen = Screen.Dashboard; currentPopup = null }
+                    )
+                    Popup.Profile -> Profile(
+                        close = { currentPopup = null }
                     )
                 }
             }
