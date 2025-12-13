@@ -5,4 +5,5 @@ sealed class Popup {
     data object Signup: Popup()
     data object Profile: Popup()
     data object CameraConfirm: Popup()
+    data object Loading: Popup()
 }

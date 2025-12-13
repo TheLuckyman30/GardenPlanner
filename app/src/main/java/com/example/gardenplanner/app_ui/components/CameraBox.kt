@@ -41,7 +41,10 @@ import java.io.File
 import java.util.concurrent.Executors
 
 @Composable
-fun CameraBox(onTextRecognized: (String) -> Unit) {
+fun CameraBox(setLoading: () -> Unit,
+              closeLoading: () -> Unit,
+              onTextRecognized: (String) -> Unit,
+              ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val previewView = remember {
@@ -84,6 +87,7 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
         )
         IconButton (
             onClick = {
+                setLoading();
                 val outputFile = File(
                     context.cacheDir,
                     "captured_image_${System.currentTimeMillis()}.jpg"
@@ -96,10 +100,14 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
                         override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                             val savedUri = outputFileResults.savedUri ?: outputFile.toUri()
                             TextRecognitionHelper.recognizeTextFromUri(context, savedUri) {
+                                if (it == "") {
+                                    closeLoading()
+                                }
                                 onTextRecognized(it)
                             }
                         }
                         override fun onError(exception: ImageCaptureException) {
+                            closeLoading();
                             Log.e("CameraPreview", "Capture failed: ${exception.message}", exception)
                         }
                     }

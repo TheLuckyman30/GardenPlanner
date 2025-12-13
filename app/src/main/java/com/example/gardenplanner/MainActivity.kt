@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.components.popups.CameraConfirm
+import com.example.gardenplanner.app_ui.components.popups.Loading
 import com.example.gardenplanner.app_ui.components.popups.Login
 import com.example.gardenplanner.app_ui.components.popups.Profile
 import com.example.gardenplanner.app_ui.components.popups.Signup
@@ -72,7 +73,11 @@ class MainActivity : ComponentActivity() {
                                 openSignup = { currentPopup = Popup.Signup }
                             )
                             Screen.Dashboard -> Dashboard()
-                            Screen.SeedScanner -> Scanner(updateText = { newText -> recognizedText = newText })
+                            Screen.SeedScanner -> Scanner(
+                                updateText = { newText -> recognizedText = newText },
+                                setLoading = { currentPopup = Popup.Loading },
+                                closeLoading = { currentPopup = Popup.CameraConfirm }
+                            )
                             Screen.IndividualInfoPage -> IndividualInfo(selectedPlant)
                             Screen.AllInfoPage -> AllInfo(
                                 userPlants,
@@ -126,6 +131,7 @@ class MainActivity : ComponentActivity() {
                         addUserPlant = { userPlants += extractedPlant as Plant },
                         navIndividual = { currentScreen = Screen.IndividualInfoPage }
                     )
+                    Popup.Loading -> Loading()
                 }
 
                 // Effects (Similar to useEffect if you used React before)

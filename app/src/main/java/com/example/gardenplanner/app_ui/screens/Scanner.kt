@@ -19,7 +19,9 @@ import androidx.core.content.ContextCompat
 import com.example.gardenplanner.app_ui.components.CameraBox
 
 @Composable
-fun Scanner(updateText: (String) -> Unit) {
+fun Scanner(updateText: (String) -> Unit,
+            setLoading: () -> Unit,
+            closeLoading: () -> Unit) {
     val context = LocalContext.current
     val cameraPermissionState = remember { mutableStateOf(false) }
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -43,7 +45,7 @@ fun Scanner(updateText: (String) -> Unit) {
         Column(modifier = Modifier
             .fillMaxSize()) {
             if (cameraPermissionState.value) {
-                CameraBox { newText ->
+                CameraBox(setLoading, closeLoading) { newText ->
                     updateText(newText)
                 }
             } else {
