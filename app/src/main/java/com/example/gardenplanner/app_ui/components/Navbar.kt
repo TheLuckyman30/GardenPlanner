@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,8 +26,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Navbar(navAll: () -> Unit,
+           navDashboard: () -> Unit,
            navPlot: () -> Unit,
-           openSidebar: () -> Unit) {
+           openSidebar: () -> Unit,
+           openProfile: () -> Unit) {
     FlowRow(modifier = Modifier
         .fillMaxWidth()
         .background(color = Color(0xFF294A42))
@@ -53,21 +55,21 @@ fun Navbar(navAll: () -> Unit,
                     TextButton(onClick = navAll) {
                         Text("Plants", style = textStyle())
                     }
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = navDashboard) {
                         Text("Home", style = textStyle())
                     }
                     TextButton (onClick = navPlot) {
                         Text("Garden", style = textStyle())
                     }
                 }
-                IconButton(onClick = {},
+                IconButton(onClick = openProfile,
                     modifier = Modifier
                         .absolutePadding(left = 10.dp)
                         .width(50.22122.dp)
                         .height(49.01075.dp)
                         .background(color = Color(0xFF9CC7B9), shape = RoundedCornerShape(size = 360.dp))
                 ) {
-                    Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Menu", tint = Color.White)
+                    Icon(imageVector = Icons.Default.Person, contentDescription = "Menu", tint = Color.White)
                 }
             }
 
