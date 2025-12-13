@@ -7,12 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.components.popups.Login
@@ -46,9 +48,13 @@ class MainActivity : ComponentActivity() {
                     }
                 )
                 { innerPadding ->
-                    Surface(modifier = Modifier.padding(innerPadding)) {
+                    Surface(modifier = Modifier.padding(
+                        if( currentScreen == Screen.LandingPage)
+                            PaddingValues(0.dp)
+                        else innerPadding)
+                    ) {
                         when (currentScreen) {
-                            Screen.LandingPage -> LandingPage()
+                            Screen.LandingPage -> LandingPage(innerPadding)
                             Screen.Dashboard -> Dashboard()
                             Screen.SeedScanner -> Scanner()
                             Screen.IndividualInfoPage -> IndividualInfo()
