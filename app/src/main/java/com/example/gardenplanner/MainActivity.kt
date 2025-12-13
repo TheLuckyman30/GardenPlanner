@@ -24,6 +24,9 @@ import com.example.gardenplanner.app_ui.components.popups.Signup
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
+import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
+import com.example.gardenplanner.utils.classes.Plants
+import kotlin.collections.emptyList
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
+                var userPlants by remember { mutableStateOf(emptyList<Plants>()) }
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
@@ -67,7 +71,7 @@ class MainActivity : ComponentActivity() {
                                 updateText = { newText -> recognizedText = newText }
                             )
                             Screen.IndividualInfoPage -> IndividualInfo()
-                            Screen.AllInfoPage -> AllInfo()
+                            Screen.AllInfoPage -> AllInfo(userPlants)
                             Screen.NotificationsPage -> Notifications()
                             Screen.PlotterPage -> Plotter()
                         }
@@ -106,7 +110,15 @@ class MainActivity : ComponentActivity() {
                 }
 
                 LaunchedEffect(recognizedText) {
-                    Log.d("Test", "Text: ${recognizedText.split("\n")}")
+                    if (recognizedText != "") {
+                        val text = recognizedText.split("\n")
+                        val extractedPlant = DefaultPlantsAdvice.firstOrNull { plant ->
+                            text.any { t -> t.lowercase().trim() == plant.name.lowercase() }
+                        }
+                        if (extractedPlant != null) {
+                            userPlants += extractedPlant
+                        }
+                    }
                 }
             }
         }
