@@ -11,13 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
-import com.example.gardenplanner.app_ui.components.popups.CustomPopup
 import com.example.gardenplanner.app_ui.components.popups.Login
+import com.example.gardenplanner.app_ui.components.popups.Signup
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Screen
 
@@ -29,7 +28,6 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var sidebarOpen by remember { mutableStateOf(false) }
-                val list = listOf("1", "2", "3")
 
                 Scaffold(
                     topBar = {
@@ -69,7 +67,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 // Pop-Ups
-                Login()
+                Signup()
             }
         }
     }
