@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
-                var currentPopup by remember { mutableStateOf<Popup?>(Popup.Profile) }
+                var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
 
                 Scaffold(
@@ -38,7 +38,8 @@ class MainActivity : ComponentActivity() {
                             navAll = { currentScreen = Screen.AllInfoPage },
                             navDashboard = { currentScreen = Screen.Dashboard },
                             navPlot = { currentScreen = Screen.PlotterPage },
-                            openSidebar = { sidebarOpen = true }
+                            openSidebar = { sidebarOpen = true },
+                            openProfile = { currentPopup = Popup.Profile }
                         )
                     }
                 )
@@ -82,7 +83,8 @@ class MainActivity : ComponentActivity() {
                         navDashboard = { currentScreen = Screen.Dashboard; currentPopup = null }
                     )
                     Popup.Profile -> Profile(
-                        close = { currentPopup = null }
+                        close = { currentPopup = null },
+                        navLandingPage = { currentScreen = Screen.LandingPage; currentPopup = null }
                     )
                 }
             }

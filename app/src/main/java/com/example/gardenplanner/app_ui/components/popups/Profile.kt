@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,19 +26,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Profile(close: () -> Unit) {
+fun Profile(close: () -> Unit,
+            navLandingPage: () -> Unit) {
     CustomPopup(
         popupWidth = 203F,
         popupHeight = 217F,
         onClickOutside = close,
         bgColor = Color.White,
         padding = 0F,
-        content = { ProfileContent() }
+        content = { ProfileContent(close, navLandingPage) }
     )
 }
 
 @Composable
-fun ProfileContent() {
+fun ProfileContent(close: () -> Unit,
+                   navLandingPage: () -> Unit) {
     Column {
         Box(modifier = Modifier
             .width(203.dp)
@@ -63,7 +63,7 @@ fun ProfileContent() {
                     Icon(imageVector = Icons.Default.Person, contentDescription = "Menu", tint = Color(0xFF2F7564))
                 }
                 TextButton (
-                    onClick = {},
+                    onClick = close,
                 ) {
                     Text("Close",
                         style = TextStyle(
@@ -82,7 +82,7 @@ fun ProfileContent() {
         ) {
             Column {
                 TextButton (
-                    onClick = {},
+                    onClick = navLandingPage,
                 ) {
                     Text("Logout",
                         style = TextStyle(

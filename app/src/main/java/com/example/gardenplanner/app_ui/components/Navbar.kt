@@ -28,7 +28,8 @@ import androidx.compose.ui.unit.sp
 fun Navbar(navAll: () -> Unit,
            navDashboard: () -> Unit,
            navPlot: () -> Unit,
-           openSidebar: () -> Unit) {
+           openSidebar: () -> Unit,
+           openProfile: () -> Unit) {
     FlowRow(modifier = Modifier
         .fillMaxWidth()
         .background(color = Color(0xFF294A42))
@@ -61,7 +62,7 @@ fun Navbar(navAll: () -> Unit,
                         Text("Garden", style = textStyle())
                     }
                 }
-                IconButton(onClick = {},
+                IconButton(onClick = openProfile,
                     modifier = Modifier
                         .absolutePadding(left = 10.dp)
                         .width(50.22122.dp)
