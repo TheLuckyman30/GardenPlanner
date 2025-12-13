@@ -34,13 +34,15 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     topBar = {
-                        Navbar (
-                            navAll = { currentScreen = Screen.AllInfoPage },
-                            navDashboard = { currentScreen = Screen.Dashboard },
-                            navPlot = { currentScreen = Screen.PlotterPage },
-                            openSidebar = { sidebarOpen = true },
-                            openProfile = { currentPopup = Popup.Profile }
-                        )
+                        if (currentScreen != Screen.LandingPage) {
+                            Navbar (
+                                navAll = { currentScreen = Screen.AllInfoPage },
+                                navDashboard = { currentScreen = Screen.Dashboard },
+                                navPlot = { currentScreen = Screen.PlotterPage },
+                                openSidebar = { sidebarOpen = true },
+                                openProfile = { currentPopup = Popup.Profile }
+                            )
+                        }
                     }
                 )
                 { innerPadding ->
