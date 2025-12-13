@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Navbar(navAll: () -> Unit,
+           navDashboard: () -> Unit,
            navPlot: () -> Unit,
            openSidebar: () -> Unit) {
     FlowRow(modifier = Modifier
@@ -53,7 +54,7 @@ fun Navbar(navAll: () -> Unit,
                     TextButton(onClick = navAll) {
                         Text("Plants", style = textStyle())
                     }
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = navDashboard) {
                         Text("Home", style = textStyle())
                     }
                     TextButton (onClick = navPlot) {

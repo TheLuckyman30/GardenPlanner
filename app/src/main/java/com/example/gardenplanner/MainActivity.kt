@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     topBar = {
                         Navbar (
                             navAll = { currentScreen = Screen.AllInfoPage },
+                            navDashboard = { currentScreen = Screen.Dashboard },
                             navPlot = { currentScreen = Screen.PlotterPage },
                             openSidebar = { sidebarOpen = true }
                         )
