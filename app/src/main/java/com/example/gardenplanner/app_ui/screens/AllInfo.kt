@@ -11,14 +11,23 @@ import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
 import com.example.gardenplanner.utils.classes.Plant
 
 @Composable
-fun AllInfo(userPlants: List<Plant>) {
+fun AllInfo(userPlants: List<Plant>,
+            navIndividual: () -> Unit,
+            setSelectedPlant: (Plant) -> Unit) {
     Surface(modifier = Modifier
         .fillMaxSize()
     ) {
         FlowRow (modifier = Modifier
             .fillMaxSize()
         ) {
-            PlantCard(DefaultPlantsAdvice[0])
+            PlantCard(plant = DefaultPlantsAdvice[0], navIndividual ) { newPlant ->
+                setSelectedPlant(newPlant)
+            }
+            userPlants.forEach { plant ->
+                PlantCard(plant, navIndividual ) { newPlant ->
+                    setSelectedPlant(newPlant)
+                }
+            }
         }
     }
 }

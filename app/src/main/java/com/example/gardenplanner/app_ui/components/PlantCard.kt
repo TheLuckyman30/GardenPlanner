@@ -1,5 +1,6 @@
 package com.example.gardenplanner.app_ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,10 +20,13 @@ import androidx.compose.ui.unit.sp
 import com.example.gardenplanner.utils.classes.Plant
 
 @Composable
-fun PlantCard(plant: Plant) {
+fun PlantCard(plant: Plant,
+              navIndividual: () -> Unit,
+              setSelectedPlant: (Plant) -> Unit) {
     Surface(modifier = Modifier
         .width(132.dp)
-        .height(149.dp),
+        .height(149.dp)
+        .clickable(onClick = { setSelectedPlant(plant); navIndividual() }),
         shape = RoundedCornerShape(30.dp),
         color = Color(0xFF669B89)
     ) {

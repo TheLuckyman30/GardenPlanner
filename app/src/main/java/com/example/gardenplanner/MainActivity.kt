@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 var recognizedText by remember { mutableStateOf("Recognized text will appear here.") }
                 var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
+                var selectedPlant by remember { mutableStateOf<Plant?>(null) }
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
@@ -69,8 +70,12 @@ class MainActivity : ComponentActivity() {
                                 recognizedText,
                                 updateText = { newText -> recognizedText = newText }
                             )
-                            Screen.IndividualInfoPage -> IndividualInfo()
-                            Screen.AllInfoPage -> AllInfo(userPlants)
+                            Screen.IndividualInfoPage -> IndividualInfo(selectedPlant)
+                            Screen.AllInfoPage -> AllInfo(
+                                userPlants,
+                                navIndividual = { currentScreen = Screen.IndividualInfoPage },
+                                setSelectedPlant = { newPlant -> selectedPlant = newPlant }
+                            )
                             Screen.NotificationsPage -> Notifications()
                             Screen.PlotterPage -> Plotter()
                         }
