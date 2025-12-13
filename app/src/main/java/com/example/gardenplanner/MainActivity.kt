@@ -4,14 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
+import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Screen
 
@@ -22,17 +25,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
+                var sidebarOpen by remember { mutableStateOf(false) }
 
                 Scaffold(
                     topBar = {
-                        Navbar(
-                            modifier = Modifier.padding(top = 16.dp),
-                            navDashboard = { currentScreen = Screen.Dashboard },
-                            navScanner = { currentScreen = Screen.SeedScanner },
-                            navIndividual = { currentScreen = Screen.IndividualInfoPage },
+                        Navbar (
                             navAll = { currentScreen = Screen.AllInfoPage },
-                            navNotifs = { currentScreen = Screen.NotificationsPage },
-                            navPlot = { currentScreen = Screen.PlotterPage }
+                            navPlot = { currentScreen = Screen.PlotterPage },
+                            openSidebar = { sidebarOpen = true }
                         )
                     }
                 )
@@ -48,6 +48,19 @@ class MainActivity : ComponentActivity() {
                             Screen.PlotterPage -> Plotter()
                         }
                     }
+                }
+                AnimatedVisibility(
+                    visible = sidebarOpen,
+                    enter = slideInHorizontally { fullWidth -> -fullWidth },
+                    exit = slideOutHorizontally { fullWidth -> -fullWidth * 2 }
+                ) {
+                    Sidebar(
+                        closeSidebar = { sidebarOpen = false },
+                        navScanner = { currentScreen = Screen.SeedScanner },
+                        navNotifications = { currentScreen = Screen.NotificationsPage },
+                        navAllPlants = { currentScreen = Screen.AllInfoPage },
+                        navPlotter = { currentScreen = Screen.PlotterPage },
+                        navDashboard = { currentScreen = Screen.Dashboard })
                 }
             }
         }
