@@ -29,17 +29,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Login() {
+fun Login(close: () -> Unit,
+          navDashboard: () -> Unit,
+          openSignUp: () -> Unit) {
     CustomPopup(
         popupWidth = 355F,
         popupHeight = 355F,
-        onClickOutside = {},
+        onClickOutside = close,
         bgColor = Color(0xFF9CC7B9),
-        content = { LoginContent() })
+        content = { LoginContent(openSignUp, navDashboard) })
 }
 
 @Composable
-fun LoginContent() {
+fun LoginContent(openSignUp: () -> Unit,
+                 navDashboard: () -> Unit) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -122,7 +125,7 @@ fun LoginContent() {
                     .height(31.85.dp)
                     .background(color = Color(0xFF2F7564), shape = RoundedCornerShape(size = 16.85.dp))
                     .padding(start = 8.425.dp, top = 8.425.dp, end = 8.425.dp, bottom = 8.425.dp)
-                    .clickable(onClick = {}),
+                    .clickable(onClick = navDashboard),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("LOGIN",
@@ -139,7 +142,7 @@ fun LoginContent() {
                     .height(31.85.dp)
                     .background(color = Color.White, shape = RoundedCornerShape(size = 16.85.dp))
                     .padding(start = 8.425.dp, top = 8.425.dp, end = 8.425.dp, bottom = 8.425.dp)
-                    .clickable(onClick = {}),
+                    .clickable(onClick = openSignUp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("SIGN UP",

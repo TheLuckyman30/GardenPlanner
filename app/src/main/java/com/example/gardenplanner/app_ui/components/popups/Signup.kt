@@ -29,17 +29,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Signup() {
+fun Signup(close: () -> Unit,
+           navDashboard: () -> Unit) {
     CustomPopup(
         popupWidth = 355F,
         popupHeight = 505F,
-        onClickOutside = {},
+        onClickOutside = close,
         bgColor = Color(0xFF9CC7B9),
-        content = { SignupContent() })
+        content = { SignupContent(navDashboard) })
 }
 
 @Composable
-fun SignupContent() {
+fun SignupContent(navDashboard: () -> Unit) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -150,7 +151,7 @@ fun SignupContent() {
                 .height(50.02273.dp)
                 .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 26.32775.dp))
                 .padding(start = 13.16388.dp, top = 13.16388.dp, end = 13.16388.dp, bottom = 13.16388.dp)
-                .clickable(onClick = {}),
+                .clickable(onClick = navDashboard),
                 contentAlignment = Alignment.Center
             ) {
                 Text("REGISTER",

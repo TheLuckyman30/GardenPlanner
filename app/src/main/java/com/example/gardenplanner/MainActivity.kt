@@ -18,6 +18,7 @@ import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.components.popups.Login
 import com.example.gardenplanner.app_ui.components.popups.Signup
 import com.example.gardenplanner.app_ui.screens.*
+import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
 
 class MainActivity : ComponentActivity() {
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
+                var currentPopup by remember { mutableStateOf<Popup?>(Popup.Login) }
                 var sidebarOpen by remember { mutableStateOf(false) }
 
                 Scaffold(
@@ -67,7 +69,18 @@ class MainActivity : ComponentActivity() {
                 }
 
                 // Pop-Ups
-                Signup()
+                when(currentPopup) {
+                    null -> null
+                    Popup.Login -> Login(
+                        close = { currentPopup = null },
+                        navDashboard = { currentScreen = Screen.Dashboard; currentPopup = null },
+                        openSignUp = { currentPopup = Popup.Signup }
+                    )
+                    Popup.Signup -> Signup(
+                        close = { currentPopup = null },
+                        navDashboard = { currentScreen = Screen.Dashboard; currentPopup = null }
+                    )
+                }
             }
         }
     }
