@@ -72,7 +72,6 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxHeight()
-            .clip(RoundedCornerShape(16.dp))
     ) {
         AndroidView(
             factory = { previewView },
