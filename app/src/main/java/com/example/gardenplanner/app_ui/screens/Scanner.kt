@@ -1,49 +1,28 @@
 package com.example.gardenplanner.app_ui.screens
 
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.gardenplanner.app_ui.components.CameraBox
-import com.example.gardenplanner.utils.helpers.TextRecognitionHelper
 
 @Composable
-fun Scanner(recognizedText: String,
-            updateText: (String) -> Unit) {
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+fun Scanner(updateText: (String) -> Unit,
+            setLoading: () -> Unit,
+            closeLoading: () -> Unit) {
     val context = LocalContext.current
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        selectedImageUri = uri
-        uri?.let {
-            TextRecognitionHelper.recognizeTextFromUri(context, uri) { result ->
-                updateText(result)
-            }
-        }
-    }
     val cameraPermissionState = remember { mutableStateOf(false) }
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -62,13 +41,11 @@ fun Scanner(recognizedText: String,
             permissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .padding(16.dp)) {
+            .fillMaxSize()) {
             if (cameraPermissionState.value) {
-                CameraBox { newText ->
+                CameraBox(setLoading, closeLoading) { newText ->
                     updateText(newText)
                 }
             } else {
@@ -79,23 +56,6 @@ fun Scanner(recognizedText: String,
                     Text("Camera permission is required to use this feature.")
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Button (
-                onClick = { galleryLauncher.launch("image/*") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text("Select Image from Gallery")
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = recognizedText,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
         }
     }
 }

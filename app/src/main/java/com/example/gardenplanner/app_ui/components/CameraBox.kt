@@ -12,11 +12,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,12 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.example.gardenplanner.app_ui.components.icons.Camera
 import com.example.gardenplanner.utils.helpers.TextRecognitionHelper
 import java.io.File
 import java.util.concurrent.Executors
 
 @Composable
-fun CameraBox(onTextRecognized: (String) -> Unit) {
+fun CameraBox(setLoading: () -> Unit,
+              closeLoading: () -> Unit,
+              onTextRecognized: (String) -> Unit,
+              ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val previewView = remember {
@@ -70,18 +81,15 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
     }
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .border(2.dp, Color.Gray, RoundedCornerShape(16.dp))
-            .clip(RoundedCornerShape(16.dp))
-            .aspectRatio(1f)
-            .background(Color.Black)
+            .fillMaxHeight()
     ) {
         AndroidView(
             factory = { previewView },
             modifier = Modifier.fillMaxSize()
         )
-        Button (
+        IconButton (
             onClick = {
+                setLoading();
                 val outputFile = File(
                     context.cacheDir,
                     "captured_image_${System.currentTimeMillis()}.jpg"
@@ -94,10 +102,14 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
                         override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                             val savedUri = outputFileResults.savedUri ?: outputFile.toUri()
                             TextRecognitionHelper.recognizeTextFromUri(context, savedUri) {
+                                if (it == "") {
+                                    closeLoading()
+                                }
                                 onTextRecognized(it)
                             }
                         }
                         override fun onError(exception: ImageCaptureException) {
+                            closeLoading();
                             Log.e("CameraPreview", "Capture failed: ${exception.message}", exception)
                         }
                     }
@@ -105,9 +117,12 @@ fun CameraBox(onTextRecognized: (String) -> Unit) {
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .height(100.dp)
+                .width(100.dp)
                 .padding(12.dp)
+                .background(Color.White, RoundedCornerShape(360.dp))
         ) {
-            Text("Capture")
+            Icon(imageVector = Camera, contentDescription = "Camera")
         }
     }
 }
