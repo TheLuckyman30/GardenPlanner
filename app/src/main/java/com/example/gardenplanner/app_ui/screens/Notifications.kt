@@ -1,5 +1,6 @@
 package com.example.gardenplanner.app_ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -28,8 +30,8 @@ fun generateNotification(plant: Plant): Notification {
         newInterval = 3
     }
     val newTime = ZonedDateTime.now()
-    newTime.plusDays(newInterval)
-    return Notification(plant, newTime, newInterval)
+    val addedTime = newTime.plusDays(newInterval)
+    return Notification(plant, addedTime, newInterval)
 }
 
 @Composable
@@ -38,26 +40,33 @@ fun Notifications(userPlants: List<Plant>,
                   addNotification: (Notification) -> Unit) {
     Box (
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
+            .fillMaxSize()
+            .padding(top = 100.dp)
+            .background(Color(0xFF9CC7B9), RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
             .verticalScroll(rememberScrollState()),
-        contentAlignment = Alignment.Center
     ) {
-        Column(Modifier.fillMaxWidth(0.8F)) {
-            userNotifications.forEach { notification ->
-                NotificationCard(notification)
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-            TextButton(onClick = {
-                userPlants.forEach { plant ->
-                    val existingNotification = userNotifications.firstOrNull(
-
-                    )
-                    val newNotification = generateNotification(plant)
-                    addNotification(newNotification)
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp),
+            contentAlignment = Alignment.Center) {
+            Column(Modifier.fillMaxWidth(0.9F)) {
+                userNotifications.forEach { notification ->
+                    NotificationCard(notification)
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
-            }) {
-                Text("Test")
+                TextButton(onClick = {
+                    userPlants.forEach { plant ->
+                        val existingNotification = userNotifications.firstOrNull { notification ->
+                            notification.plant == plant
+                        }
+                        if (existingNotification == null) {
+                            val newNotification = generateNotification(plant)
+                            addNotification(newNotification)
+                        }
+                    }
+                }) {
+                    Text("Test")
+                }
             }
         }
     }
