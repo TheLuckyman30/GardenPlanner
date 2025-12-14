@@ -3,6 +3,7 @@ package com.example.gardenplanner.app_ui.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,10 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
@@ -60,16 +61,37 @@ private fun DraggableBox(offX: Float, offy: Float, color: Color) {
     }
 }
 
-data class Plant(val plantType: String, val color: Color)
+data class Plant(var plantType: String, var color: Color)
 data class Box(val offsetX: Float, val offsetY: Float, val plant: Plant)
+
+fun plantCycle(inPlant: Plant): Plant {
+    if(inPlant.plantType == "Tomato"){
+        return Plant("Blueberry", Color.Blue)
+    }else if(inPlant.plantType == "Blueberry"){
+        return Plant("String Beans", Color.Green)
+    }else if(inPlant.plantType == "String Beans"){
+        return Plant("Carrot", Color(0xFFFF9736))
+    }else return(Plant("Tomato", Color.Red))
+}
+fun plantCycleReverse(inPlant: Plant): Plant {
+    if(inPlant.plantType == "Tomato"){
+        return Plant("Carrot", Color(0xFFFF9736))
+    }else if(inPlant.plantType == "Blueberry"){
+        return (Plant("Tomato", Color.Red))
+    }else if(inPlant.plantType == "String Beans"){
+        return Plant("Blueberry", Color.Blue)
+    }else return Plant("String Beans", Color.Green)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Plotter() {
+    val curPlant = remember{ mutableStateOf(Plant("Tomato", Color.Red)) }
     val boxes = remember {
         mutableStateListOf<Box>()
     }
+    var colorState by remember { mutableStateOf(Color.Red) }
 
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
@@ -84,31 +106,38 @@ fun Plotter() {
                     .padding(16.dp), // Adds some padding around the buttons
                 horizontalArrangement = Arrangement.SpaceEvenly // Distributes space evenly between buttons
             ) {
+                Button(onClick = {
+                    val tempPlant = plantCycleReverse(curPlant.value); curPlant.value.plantType =
+                    tempPlant.plantType; curPlant.value.color = tempPlant.color; colorState = tempPlant.color
+                }) { }
 
                 Box(
                     Modifier
                         .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
                         .background(color = Color(0xFFF7FFFC))
                         .size(100.dp)
-                        .pointerInput(Unit) {
-                            detectDragGestures { change, dragAmount ->
-                                change.consume()
-                                boxes.add(
-                                    element = Box(offsetX+410, offsetY+40, Plant("test", Color.Red))
+                        .clickable(onClick = {
+                            boxes.add(
+                                element = Box(
+                                    offsetX,
+                                    offsetY,
+                                    Plant(curPlant.value.plantType, curPlant.value.color)
                                 )
-                            }
-                        }
-                )
+                            )
+                        })
+                ) {
+                    Canvas(modifier = Modifier.fillMaxSize()) {
+                        drawCircle(color = colorState, radius = size.minDimension / 3f)
+                    }}
+                    Button(onClick = {
+                        val tempPlant = plantCycle(curPlant.value); curPlant.value.plantType =
+                        tempPlant.plantType; curPlant.value.color = tempPlant.color; colorState = tempPlant.color
+                    }) { }
 
-            //Button(onClick = { boxes.add(Box(start = 0, Plant("test", Color.Red))) }) { }
             }
         }
-
-
-
         boxes.forEach { box ->
             DraggableBox(box.offsetX, box.offsetY, box.plant.color)
         }
-
     }
 }
