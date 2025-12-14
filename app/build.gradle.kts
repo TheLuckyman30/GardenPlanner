@@ -10,6 +10,10 @@ android {
         version = release(36)
     }
 
+    dependencies {
+        implementation("androidx.compose.material:material-icons-extended")
+    }
+
     defaultConfig {
         applicationId = "com.example.gardenplanner"
         minSdk = 24
@@ -50,6 +54,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.foundation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
