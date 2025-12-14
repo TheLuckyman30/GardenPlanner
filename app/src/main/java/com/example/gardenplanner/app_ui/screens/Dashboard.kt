@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +18,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -72,14 +75,16 @@ fun GardenGrid(
         "🍉", "🍉", ""
     )
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(plants.size) { index ->
-            GardenTile(plants[index])
+    Box(modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.Center) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxHeight()
+        ) {
+            items(plants.size) { index ->
+                GardenTile(plants[index])
+            }
         }
     }
 }
@@ -95,7 +100,8 @@ fun Dashboard( navScanner: ()-> Unit, navPlotter: ()-> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(MintGreen)
-            .padding(20.dp),
+            .padding(20.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
@@ -166,7 +172,8 @@ fun Dashboard( navScanner: ()-> Unit, navPlotter: ()-> Unit) {
                 ) {
                     Row(
                         modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
                     ) {
 
                         // ⬅️ Previous
@@ -181,7 +188,7 @@ fun Dashboard( navScanner: ()-> Unit, navPlotter: ()-> Unit) {
                         // 🌱 GRID AREA
                         Box(
                             modifier = Modifier
-                                .weight(1f)
+                                .weight(1F)
                                 .padding(horizontal = 8.dp)
                         ) {
                             GardenGrid()

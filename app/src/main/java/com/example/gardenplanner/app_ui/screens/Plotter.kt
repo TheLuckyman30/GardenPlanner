@@ -41,21 +41,22 @@ import com.example.gardenplanner.utils.classes.Plant
 import com.example.gardenplanner.utils.classes.PlotterPlant
 import kotlin.math.roundToInt
 
-//fun autoGen(inBox: Box): Plant{
-//    if (inBox.plant.plantType == "Empty"){
-//        val ranum = (1..4).random()
-//        if(ranum == 1){return(Plant("Tomato",  R.drawable.tomato))}
-//        else if(ranum == 2){return Plant("Blueberry",R.drawable.blueberry)}
-//        else if(ranum == 3){return Plant("String Beans", R.drawable.string_beans)}
-//        else {return Plant("Carrot", R.drawable.carrot)}
-//    }
-//    return inBox.plant
-//}
+fun autoGen(gardenBox: GardenBox, allPlants: List<PlotterPlant>): PlotterPlant? {
+    if (gardenBox.image == R.drawable.empty) {
+        val randInt = (0..allPlants.size - 1).random()
+        return allPlants[randInt]
+    }
+    return null
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Plotter(userPlants: List<Plant>) {
+fun Plotter(userPlants: List<Plant>,
+            gardenBoxes: List<GardenBox>,
+            addBox: (GardenBox) -> Unit,
+            setBoxes: (List<GardenBox>) -> Unit,
+            resetBoxes: () -> Unit) {
     if (userPlants.isNotEmpty()) {
         val images = listOf(R.drawable.tomato, R.drawable.carrot, R.drawable.blueberry, R.drawable.string_beans)
         val imageMap = mapOf(
@@ -74,7 +75,6 @@ fun Plotter(userPlants: List<Plant>) {
             }
         }
         var currentPlant by remember { mutableStateOf(allPlants[0]) }
-        var gardenBoxes by remember { mutableStateOf(emptyList<GardenBox>()) }
         var sizeMod = 1.0
         var currentIndex = 0
 
@@ -127,12 +127,15 @@ fun Plotter(userPlants: List<Plant>) {
                                 .background(color = Color(0xFFFFFFFF))
                                 .width(100.dp)
                                 .clickable(onClick = {
-                                    gardenBoxes += GardenBox(
-                                        0F,
-                                        0F + 450,
-                                        image = currentPlant.image,
-                                        plantName = currentPlant.plant.name,
-                                        sizeMod)
+                                    addBox(
+                                        GardenBox(
+                                            0F,
+                                            0F + 450,
+                                            image = currentPlant.image,
+                                            plantName = currentPlant.plant.name,
+                                            sizeMod
+                                        )
+                                    )
                                 })
                         ) {
                             Column(
@@ -176,6 +179,11 @@ fun Plotter(userPlants: List<Plant>) {
                             }
                         }
                     }
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly) {
+                    }
                 }
             }
         ) {
@@ -185,30 +193,55 @@ fun Plotter(userPlants: List<Plant>) {
                     .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-//                FilledTonalButton(
-//                    onClick = {
-//                        boxes.forEach { box -> box.plant = autoGen(box) }
-//                        boxes.add(
-//                            Box(
-//                                offsetX,
-//                                offsetY,
-//                                Plant(
-//                                    curPlant.value.plantType,
-//                                    curPlant.value.plantImageid
-//                                ),
-//                                sizeMod = sizeMod
-//                            )
-//                        )
-//                        boxes.removeAt(boxes.lastIndex)
-//                    }, colors = ButtonDefaults.buttonColors(
-//                        containerColor = Color(0xFF2F7564),
-//                        contentColor = Color.White
-//                    )
-//                ) {
-//                    Text("Auto Fill")
-//                }
+                    FilledTonalButton(
+                        onClick = {
+                            setBoxes(gardenBoxes.map { gardenBox ->
+                                val plotterPlant = autoGen(gardenBox, allPlants)
+                                if (plotterPlant != null) {
+                                    gardenBox.copy(
+                                        plantName = plotterPlant.plant.name,
+                                        image = plotterPlant.image
+                                    )
+                                } else {
+                                    gardenBox
+                                }
+                            })
+                        }, colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2F7564),
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text("Auto Fill")
+                    }
+                    FilledTonalButton(
+                        onClick = {
+                            addBox(
+                                GardenBox(
+                                    0F,
+                                    0F + 450,
+                                    R.drawable.empty,
+                                    "",
+                                    sizeMod
+                                )
+                            )
+                        }, colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2F7564),
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text("Add Empty")
+                    }
+                    FilledTonalButton(
+                        onClick = resetBoxes,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFF2F7564),
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text("Clear")
+                    }
                 }
-                Box(modifier = Modifier.fillMaxSize().background(Color.Blue)) {}
+                Box(modifier = Modifier.fillMaxSize().background(Color(0xFF8D4B35))) {}
             }
             gardenBoxes.forEach { gardenBox ->
                 DraggableBox(gardenBox)
