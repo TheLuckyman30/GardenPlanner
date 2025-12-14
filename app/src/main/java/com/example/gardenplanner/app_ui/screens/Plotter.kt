@@ -57,7 +57,22 @@ import kotlin.math.roundToInt
 @Composable
 fun Plotter(userPlants: List<Plant>) {
     if (userPlants.isNotEmpty()) {
-        val allPlants: List<PlotterPlant> = userPlants.map { plant -> PlotterPlant(plant, R.drawable.tomato) }
+        val images = listOf(R.drawable.tomato, R.drawable.carrot, R.drawable.blueberry, R.drawable.string_beans)
+        val imageMap = mapOf(
+            "tomato" to R.drawable.tomato,
+            "carrot" to R.drawable.carrot,
+            "blueberry" to R.drawable.blueberry,
+            "string_beans" to R.drawable.string_beans
+        )
+        val allPlants: List<PlotterPlant> = userPlants.map { plant ->
+            val image = imageMap[plant.type.lowercase()]
+            if (image != null) {
+                PlotterPlant(plant, image)
+            } else {
+                val randInt = (0..3).random()
+                PlotterPlant(plant, images[randInt])
+            }
+        }
         var currentPlant by remember { mutableStateOf(allPlants[0]) }
         var gardenBoxes by remember { mutableStateOf(emptyList<GardenBox>()) }
         var sizeMod = 1.0
@@ -103,7 +118,9 @@ fun Plotter(userPlants: List<Plant>) {
                                     containerColor = Color(0xFF2F7564),
                                     contentColor = Color.White
                                 )
-                            ) { Text("Size Down") }
+                            ) {
+                                Text("Size Down")
+                            }
                         }
                         Box(
                             Modifier
