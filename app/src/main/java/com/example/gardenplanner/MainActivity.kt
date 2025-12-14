@@ -37,11 +37,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 // State Variables
+
+                // Plant
                 val adviceState = GardenAdiveViewModel()
                 var recognizedText by remember { mutableStateOf("") }
                 var extractedPlant by remember { mutableStateOf<Plant?>(null) }
                 var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
                 var selectedPlant by remember { mutableStateOf<Plant?>(null) }
+
+                //Notifications
+                var userNotifications by remember { mutableStateOf(null) }
+
+                // Navigation
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
                 var currentPopup by remember { mutableStateOf<Popup?>(null) }
                 var sidebarOpen by remember { mutableStateOf(false) }
