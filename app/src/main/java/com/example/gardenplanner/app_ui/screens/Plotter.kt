@@ -1,6 +1,7 @@
 package com.example.gardenplanner.app_ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +16,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.twotone.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.twotone.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +28,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -115,60 +120,129 @@ fun Plotter() {
     var offsetY by remember { mutableFloatStateOf(0f) }
 
     Scaffold {
-        BottomAppBar(modifier = Modifier.height(150.dp)) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Column {
-                    Button(onClick = {
-                        val tempPlant =
-                            plantCycleReverse(curPlant.value); curPlant.value.plantType =
-                        tempPlant.plantType; curPlant.value.color =
-                        tempPlant.color; curPlant.value.plantImageid =
-                        tempPlant.plantImageid; plantState = tempPlant.plantImageid
-                    }) { }
-                    Button(onClick = {if(sizeMod > 0.5){sizeMod = sizeMod - 0.1} }) { }
-                }
-                Box(
-                    Modifier
-                        .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-                        .background(color = Color(0xFFF7FFFC))
-                        .size(100.dp)
-                        .clickable(onClick = {
-                            boxes.add(
-                                element = Box(
-                                    offsetX,
-                                    offsetY,
-                                    Plant(curPlant.value.plantType, curPlant.value.color, curPlant.value.plantImageid),
-                                    sizeMod = sizeMod
-                                )
-                            )
-                        })
+        Column {
+            BottomAppBar(modifier = Modifier.background(Color(0xFFF7FFFC)).height(150.dp)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Image(
-                        painter = painterResource(id = plantState),
-                        contentDescription = curPlant.value.plantType,
-                        modifier = Modifier.fillMaxSize()
-                    )}
-                Column {
-                    Button(onClick = {
-                        val tempPlant = plantCycle(curPlant.value); curPlant.value.plantType =
-                        tempPlant.plantType; curPlant.value.color =
-                        tempPlant.color;curPlant.value.plantImageid =
-                        tempPlant.plantImageid; plantState = tempPlant.plantImageid
-                    }) { }
-                    Button(onClick = {if(sizeMod < 1.5){sizeMod = sizeMod+0.1}}) { }
+                    Column(horizontalAlignment = Alignment.End) {
+                        FilledTonalIconButton(
+                            onClick = {
+                                val tempPlant =
+                                    plantCycleReverse(curPlant.value); curPlant.value.plantType =
+                                tempPlant.plantType; curPlant.value.color =
+                                tempPlant.color; curPlant.value.plantImageid =
+                                tempPlant.plantImageid; plantState = tempPlant.plantImageid
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(containerColor = Color(0xFF2F7564), contentColor = Color.White)
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.TwoTone.KeyboardArrowLeft,
+                                contentDescription = "Left Arrow"
+                            )
+                        }
+
+                        FilledTonalButton(
+                            onClick = {
+                                if (sizeMod > 0.5) {
+                                    sizeMod = sizeMod - 0.1
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF2F7564),
+                                contentColor = Color.White
+                            )
+                        ) { Text("Size Down") }
+                    }
+                    Box(
+                        Modifier
+                            .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
+                            .background(color = Color(0xFFF7FFFC))
+                            .size(100.dp)
+                            .clickable(onClick = {
+                                boxes.add(
+                                    element = Box(
+                                        offsetX,
+                                        offsetY+450,
+                                        Plant(
+                                            curPlant.value.plantType,
+                                            curPlant.value.color,
+                                            curPlant.value.plantImageid
+                                        ),
+                                        sizeMod = sizeMod
+                                    )
+                                )
+                            })
+                    ) {
+                        Image(
+                            painter = painterResource(id = plantState),
+                            contentDescription = curPlant.value.plantType,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    Column {
+                        FilledTonalIconButton(
+                            onClick = {
+                                val tempPlant =
+                                    plantCycle(curPlant.value); curPlant.value.plantType =
+                                tempPlant.plantType; curPlant.value.color =
+                                tempPlant.color;curPlant.value.plantImageid =
+                                tempPlant.plantImageid; plantState = tempPlant.plantImageid
+                            },
+                            colors = IconButtonDefaults.iconButtonColors(containerColor = Color(0xFF2F7564), contentColor = Color.White)
+                        ) { Icon(
+                            imageVector = Icons.AutoMirrored.TwoTone.KeyboardArrowRight,
+                            contentDescription = "Right Arrow"
+                        ) }
+                        FilledTonalButton(
+                            onClick = {
+                                if (sizeMod < 1.5) {
+                                    sizeMod = sizeMod + 0.1
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF2F7564),
+                                contentColor = Color.White
+                            )
+                        )
+                        { Text("Size Up") }
+                    }
                 }
             }
-        }
-        Button(onClick = {boxes.forEach {box -> box.plant = autoGen(box)}
-            boxes.add(Box(offsetX,offsetY, Plant(curPlant.value.plantType, curPlant.value.color, curPlant.value.plantImageid), sizeMod = sizeMod))
-            boxes.removeAt(boxes.lastIndex)
-        }) { }
+                Canvas(
+                    Modifier.weight(1f).fillMaxSize().background(Color(0xFF294A42))
+                ) {}
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly) {
 
+                FilledTonalButton(
+                    onClick = {
+                        boxes.forEach { box -> box.plant = autoGen(box) }
+                        boxes.add(
+                            Box(
+                                offsetX,
+                                offsetY,
+                                Plant(
+                                    curPlant.value.plantType,
+                                    curPlant.value.color,
+                                    curPlant.value.plantImageid
+                                ),
+                                sizeMod = sizeMod
+                            )
+                        )
+                        boxes.removeAt(boxes.lastIndex)
+                    }, colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF2F7564),
+                        contentColor = Color.White
+                    )
+                ) { Text("Auto Fill") }
+            }
+        }
         boxes.forEach { box ->
             DraggableBox(box.offsetX, box.offsetY, box.plant, box.sizeMod)
         }
