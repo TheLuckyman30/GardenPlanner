@@ -1,5 +1,6 @@
 package com.example.gardenplanner.app_ui.components
 
+import android.R.attr.textStyle
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow

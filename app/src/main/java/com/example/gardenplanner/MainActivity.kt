@@ -85,8 +85,13 @@ class MainActivity : ComponentActivity() {
                                 openLogin = { currentPopup = Popup.Login },
                                 openSignup = { currentPopup = Popup.Signup }
                             )
-                            Screen.Dashboard -> Dashboard()
+                            Screen.Dashboard -> Dashboard(
+                                navScanner = {currentScreen= Screen.SeedScanner},
+                                navPlotter = {currentScreen= Screen.PlotterPage}
+
+                            )
                             Screen.SeedScanner -> Scanner(
+
                                 updateText = { newText -> recognizedText = newText },
                                 setLoading = { currentPopup = Popup.Loading },
                                 closeLoading = { currentPopup = Popup.CameraConfirm }
