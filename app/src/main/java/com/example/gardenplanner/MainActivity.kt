@@ -26,6 +26,7 @@ import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
 import com.example.gardenplanner.utils.classes.GardenAdiveViewModel
+import com.example.gardenplanner.utils.classes.Notification
 import com.example.gardenplanner.utils.classes.Plant
 import com.example.gardenplanner.utils.classes.availablePlants
 import kotlin.collections.emptyList
@@ -46,7 +47,9 @@ class MainActivity : ComponentActivity() {
                 var selectedPlant by remember { mutableStateOf<Plant?>(null) }
 
                 //Notifications
-                var userNotifications by remember { mutableStateOf(null) }
+                var userNotifications by remember { mutableStateOf(emptyList<Notification>()) }
+
+                // Plotter
 
                 // Navigation
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
@@ -93,7 +96,11 @@ class MainActivity : ComponentActivity() {
                                 navIndividual = { currentScreen = Screen.IndividualInfoPage },
                                 setSelectedPlant = { newPlant -> selectedPlant = newPlant }
                             )
-                            Screen.NotificationsPage -> Notifications()
+                            Screen.NotificationsPage -> Notifications(
+                                userPlants,
+                                userNotifications,
+                                addNotification = { newNotification -> userNotifications += newNotification }
+                            )
                             Screen.PlotterPage -> Plotter()
                         }
                     }
