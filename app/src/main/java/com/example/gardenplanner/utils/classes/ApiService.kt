@@ -1,5 +1,6 @@
 package com.example.gardenplanner.utils.classes
 
+import com.google.gson.JsonElement
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -11,5 +12,5 @@ interface ApiService {
         @Query("page") page: Int,
         @Header("x-rapidapi-key") apiKey: String,
         @Header("x-rapidapi-host") host: String
-    ): PlantApiResponse
+    ): JsonElement
 }

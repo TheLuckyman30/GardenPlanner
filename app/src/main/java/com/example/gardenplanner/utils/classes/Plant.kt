@@ -1,9 +1,5 @@
 package com.example.gardenplanner.utils.classes
 
-data class PlantApiResponse(
-    val data: List<Plant>
-)
-
 data class Plant(
     val id: String,
     val mappingId: String,
@@ -20,7 +16,6 @@ data class Plant(
     val pestAndDiseaseRisks: String,
     val highlights: String,
     val history: String,
-    val species: Species,
 )
 
 data class GrowingRequirements(
@@ -58,34 +53,6 @@ data class PlantingInstructions(
     val startIndoors: String,
     val transplantOutdoors: String,
     val directSow: String,
-)
-
-data class Species(
-    val id: String,
-    val commonName: String,
-    val scientificName: String,
-    val taxonomy: Taxonomy,
-    val growthDetails: SpeciesGrowthDetails,
-    val distribution: Distribution,
-    val nativeStatus: String
-)
-
-data class Taxonomy(
-    val family: String,
-    val genus: String,
-    val species: String,
-    val familyCommonName: String,
-    val category: String
-)
-
-data class SpeciesGrowthDetails (
-    val growthHabit: String,
-    val duration: String,
-    val activeGrowthPeriod: String,
-)
-
-data class Distribution(
-    val stateAndProvince: String,
 )
 
 
