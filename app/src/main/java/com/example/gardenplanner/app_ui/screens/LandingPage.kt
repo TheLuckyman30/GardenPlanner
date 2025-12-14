@@ -1,5 +1,10 @@
 package com.example.gardenplanner.app_ui.screens
 
+
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.example.gardenplanner.R
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -45,62 +51,96 @@ fun LandingPage(innerPadding: PaddingValues,
             color = Color.Transparent,
         ) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+
                 Column(
                     modifier = Modifier
-                        .fillMaxHeight(0.5F)
                         .fillMaxWidth()
-                        .padding(25.dp),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(horizontal = 25.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(28.dp)
                 ) {
-                    Text(text = "Welcome to Garden Plot Planner",
-                        style = TextStyle(
-                            fontSize = 40.sp,
-                            lineHeight = 50.sp,
-                            fontWeight = FontWeight(400),
-                            color = Color.White,
-                            textAlign = TextAlign.Center,
-                            letterSpacing = 0.4.sp,
+
+                    // Leaf graphic + background shape
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(260.dp)
+                            .background(
+                                color = Color(0xFF9CC7B9),
+                                shape = RoundedCornerShape(130.dp)
+                            )
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.big_leaf),
+                            contentDescription = null,
+                            modifier = Modifier.size(310.dp)
                         )
-                    )
-                    Column {
-                        TextButton (
+                    }
+
+                    // Title text (two lines like mockup)
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = "Welcome to",
+                            fontSize = 28.sp,
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Text(
+                            text = "GP Planner !",
+                            fontSize = 42.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(40.dp))
+
+                    // Buttons
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TextButton(
                             onClick = openLogin,
                             modifier = Modifier
                                 .width(299.dp)
-                                .background(color = Color(0xFF9CC7B9), shape = RoundedCornerShape(size = 200.dp))
-                        ) {
-                            Text("Login",
-                                style = TextStyle(
-                                    fontSize = 30.sp,
-                                    lineHeight = 20.sp,
-                                    fontWeight = FontWeight(400),
-                                    color = Color.Black,
-                                    textAlign = TextAlign.Center,
-                                    letterSpacing = 0.3.sp,
+                                .height(56.dp)
+                                .background(
+                                    color = Color(0xFF9CC7B9),
+                                    shape = RoundedCornerShape(200.dp)
                                 )
+                        ) {
+                            Text(
+                                "Login",
+                                fontSize = 24.sp,
+                                color = Color.Black
                             )
                         }
-                        Spacer(modifier = Modifier.height(30.dp))
-                        TextButton (
+
+                        TextButton(
                             onClick = openSignup,
                             modifier = Modifier
                                 .width(299.dp)
-                                .background(color = Color(0xFF9CC7B9), shape = RoundedCornerShape(size = 200.dp))
-                        ) {
-                            Text("Signup",
-                                style = TextStyle(
-                                    fontSize = 30.sp,
-                                    lineHeight = 20.sp,
-                                    fontWeight = FontWeight(400),
-                                    color = Color.Black,
-                                    textAlign = TextAlign.Center,
-                                    letterSpacing = 0.3.sp,
+                                .height(56.dp)
+                                .background(
+                                    color = Color(0xFF9CC7B9),
+                                    shape = RoundedCornerShape(200.dp)
                                 )
+                        ) {
+                            Text(
+                                "Sign up",
+                                fontSize = 24.sp,
+                                color = Color.Black
                             )
                         }
                     }
                 }
+
+
+
+
             }
         }
     }
