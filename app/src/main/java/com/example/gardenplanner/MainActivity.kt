@@ -110,7 +110,7 @@ class MainActivity : ComponentActivity() {
                                 removeNotification = { notification -> userNotifications -= notification },
                                 openForm = { currentPopup = Popup.CreateNotification }
                             )
-                            Screen.PlotterPage -> Plotter()
+                            Screen.PlotterPage -> Plotter(userPlants)
                         }
                     }
                 }
