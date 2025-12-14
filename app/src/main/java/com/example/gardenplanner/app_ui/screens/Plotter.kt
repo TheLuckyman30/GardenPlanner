@@ -1,7 +1,6 @@
 package com.example.gardenplanner.app_ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
@@ -111,7 +109,7 @@ fun Plotter() {
             ) {
                 Button(onClick = {
                     val tempPlant = plantCycleReverse(curPlant.value); curPlant.value.plantType =
-                    tempPlant.plantType; curPlant.value.color = tempPlant.color; plantState = tempPlant.plantImageid
+                    tempPlant.plantType; curPlant.value.color = tempPlant.color; curPlant.value.plantImageid = tempPlant.plantImageid; plantState = tempPlant.plantImageid
                 }) { }
 
                 Box(
@@ -136,7 +134,7 @@ fun Plotter() {
                     )}
                     Button(onClick = {
                         val tempPlant = plantCycle(curPlant.value); curPlant.value.plantType =
-                        tempPlant.plantType; curPlant.value.color = tempPlant.color; plantState = tempPlant.plantImageid
+                        tempPlant.plantType; curPlant.value.color = tempPlant.color;curPlant.value.plantImageid = tempPlant.plantImageid; plantState = tempPlant.plantImageid
                     }) { }
 
             }
