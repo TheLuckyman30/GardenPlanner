@@ -55,6 +55,50 @@ data class PlantingInstructions(
     val directSow: String,
 )
 
+val DefaultPlantsAdvice = listOf(Plant(
+    id = "fe039c34-ef51-409c-a238-b9c30f4bbb92",
+    mappingId = "613a1110-d758-4426-95db-172d0a225911",
+    category = "vegetable",
+    name = "Abraham Lincoln Tomato",
+    type = "tomato",
+    subtype = "slicer tomato",
+    description = "A deep red, juicy heirloom known for its rich, sweet flavor.",
+    growingRequirements = GrowingRequirements(
+        minGrowingZone = 4,
+        maxGrowingZone = 10,
+        growingZoneRange = "4-10",
+        careInstructions = "Provide strong trellising to support heavy fruit production.",
+        soilPreference = "Loamy, well-draining soil with added compost",
+        sunlightRequirement = "Full sun",
+        waterRequirement = "Moderate",
+        preferredTemperature = "70-85°F",
+        spacingRequirement = "18-24 inches apart"
+    ),
+    growthDetails = GrowthDetails(
+        growthPeriod = "Annual",
+        growthType = "Vine",
+        matureHeight = 72,
+        matureWidth = 36
+    ),
+    lifecycleMilestones = LifecycleMilestones(
+        avgFirstBloomDate = "Mid-spring",
+        firstHarvestDate = "Mid-summer",
+        lastHarvestDate = "Late summer"
+    ),
+    careInstructions = CareInstructions(
+        plantingInstructions = PlantingInstructions(
+            startIndoors = "Yes, 6-8 weeks before last frost.",
+            transplantOutdoors = "After last frost date.",
+            directSow = "Not recommended."
+        ),
+        pruningInstructions = "Prune regularly for better airflow and disease prevention.",
+        harvestingInstructions = "Harvest when fruit turns deep red and slightly soft."
+    ),
+    commonUses = "Fresh eating, slicing, cooking",
+    pestAndDiseaseRisks = "Blight, aphids, nematodes",
+    highlights = "Juicy, sweet, historic heirloom.",
+    history = "Abraham Lincoln tomatoes date back to the late 1920s and were one of the first popular commercial tomato varieties. Unlike modern hybrids, they offer a true old-fashioned tomato taste with a balance of sweetness and acidity. Their ability to grow in a variety of climates makes them a reliable choice for gardeners. Today, they remain one of the most prized heirloom slicers in cultivation."
+))
 
 val availablePlants = listOf(
     // Vegetables
