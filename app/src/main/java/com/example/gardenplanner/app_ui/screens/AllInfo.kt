@@ -21,7 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.gardenplanner.app_ui.components.PlantCard
 import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
 import com.example.gardenplanner.utils.classes.Plant
@@ -67,42 +69,45 @@ fun AllInfo(
             }
 
             // cards container
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        color = MintGreen,
-                        shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
-                    )
-                    .padding(16.dp)
-            ) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+            if (userPlants.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            color = MintGreen,
+                            shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
+                        )
+                        .padding(16.dp)
                 ) {
-
-                    // Default plants
-                    items(DefaultPlantsAdvice) { plant ->
-                        PlantCard(
-                            plant = plant,
-                            onClick = {
-                                setSelectedPlant(plant)
-                                navIndividual()
-                            }
-                        )
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        // User plants
+                        items(userPlants) { plant ->
+                            PlantCard(
+                                plant = plant,
+                                onClick = {
+                                    setSelectedPlant(plant)
+                                    navIndividual()
+                                }
+                            )
+                        }
                     }
-
-                    // User plants
-                    items(userPlants) { plant ->
-                        PlantCard(
-                            plant = plant,
-                            onClick = {
-                                setSelectedPlant(plant)
-                                navIndividual()
-                            }
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            color = MintGreen,
+                            shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp)
                         )
-                    }
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No Scanned Plants", fontSize = 30.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }

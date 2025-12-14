@@ -1,6 +1,5 @@
 package com.example.gardenplanner.app_ui.screens
 
-import ads_mobile_sdk.cu
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -187,7 +187,7 @@ fun Plotter(userPlants: List<Plant>,
                 }
             }
         ) {
-            Column {
+            Column(modifier = Modifier.background(Color.White)) {
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -246,6 +246,10 @@ fun Plotter(userPlants: List<Plant>,
             gardenBoxes.forEach { gardenBox ->
                 DraggableBox(gardenBox)
             }
+        }
+    } else {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("No Garden Plots", fontSize = 30.sp, fontWeight = FontWeight.Bold)
         }
     }
 }

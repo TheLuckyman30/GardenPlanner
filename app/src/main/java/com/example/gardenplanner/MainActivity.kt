@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 val adviceState = GardenAdiveViewModel()
                 var recognizedText by remember { mutableStateOf("") }
                 var extractedPlant by remember { mutableStateOf<Plant?>(null) }
-                var userPlants by remember { mutableStateOf(DefaultPlantsAdvice) }
+                var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
                 var selectedPlant by remember { mutableStateOf<Plant?>(null) }
 
                 //Notifications
