@@ -17,7 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.gardenplanner.app_ui.components.NotificationCard
 import com.example.gardenplanner.app_ui.components.NotificationNav
 import com.example.gardenplanner.utils.classes.Notification
@@ -36,24 +39,43 @@ fun Notifications(userPlants: List<Plant>,
             addNotification
         ) }
     ) {
-        Box (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 100.dp)
-                .background(Color(0xFF9CC7B9), RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                .verticalScroll(rememberScrollState()),
-        ) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-                contentAlignment = Alignment.Center) {
-                Column(Modifier.fillMaxWidth(0.9F)) {
-                    userNotifications.forEach { notification ->
-                        NotificationCard(notification, removeNotification)
-                        Spacer(modifier = Modifier.height(10.dp))
+        if (userNotifications.isNotEmpty()) {
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 100.dp)
+                    .background(Color(0xFF9CC7B9), RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                    contentAlignment = Alignment.Center) {
+                    Column(Modifier.fillMaxWidth(0.9F)) {
+                        userNotifications.forEach { notification ->
+                            NotificationCard(notification, removeNotification)
+                            Spacer(modifier = Modifier.height(10.dp))
+                        }
                     }
                 }
             }
+        } else {
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 100.dp)
+                    .background(Color(0xFF9CC7B9), RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                    .verticalScroll(rememberScrollState()),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("No Notifications",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 30.sp,
+                        letterSpacing = 0.17.sp
+                    ))
+            }
         }
+
     }
 }
