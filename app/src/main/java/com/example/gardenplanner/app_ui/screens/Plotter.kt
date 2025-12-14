@@ -2,6 +2,7 @@ package com.example.gardenplanner.app_ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -18,19 +19,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.example.gardenplanner.R
 import kotlin.math.roundToInt
 
 @Composable
-private fun DraggableBox(offX: Float, offy: Float, color: Color) {
+private fun DraggableBox(offX: Float, offy: Float, plant: Plant) {
     Box(modifier = Modifier.fillMaxSize()) {
         var offsetX by remember { mutableFloatStateOf(offX) }
         var offsetY by remember { mutableFloatStateOf(offy) }
@@ -48,50 +53,48 @@ private fun DraggableBox(offX: Float, offy: Float, color: Color) {
                     }
                 }
         ){
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                drawCircle(color = color, radius = size.minDimension / 3f)
-            }
-
-//            Image(
-//                painter = painterResource(id = R.drawable.tomato),
-//                contentDescription = "Tomato",
-//                modifier = Modifier.fillMaxSize()
-//            )
+            Image(
+                painter = painterResource(id = plant.plantImageid),
+                contentDescription = plant.plantType,
+                modifier = Modifier.fillMaxSize()
+            )
         }
     }
 }
 
-data class Plant(var plantType: String, var color: Color)
+data class Plant(var plantType: String, var color: Color, var plantImageid: Int)
 data class Box(val offsetX: Float, val offsetY: Float, val plant: Plant)
+
 
 fun plantCycle(inPlant: Plant): Plant {
     if(inPlant.plantType == "Tomato"){
-        return Plant("Blueberry", Color.Blue)
+        return Plant("Blueberry", Color.Blue, R.drawable.blueberry)
     }else if(inPlant.plantType == "Blueberry"){
-        return Plant("String Beans", Color.Green)
+        return Plant("String Beans", Color.Green, R.drawable.string_beans)
     }else if(inPlant.plantType == "String Beans"){
-        return Plant("Carrot", Color(0xFFFF9736))
-    }else return(Plant("Tomato", Color.Red))
+        return Plant("Carrot", Color(0xFFFF9736), R.drawable.carrot)
+    }else return(Plant("Tomato", Color.Red,  R.drawable.tomato))
 }
+
 fun plantCycleReverse(inPlant: Plant): Plant {
     if(inPlant.plantType == "Tomato"){
-        return Plant("Carrot", Color(0xFFFF9736))
+        return Plant("Carrot", Color(0xFFFF9736), R.drawable.carrot)
     }else if(inPlant.plantType == "Blueberry"){
-        return (Plant("Tomato", Color.Red))
+        return (Plant("Tomato", Color.Red,R.drawable.tomato))
     }else if(inPlant.plantType == "String Beans"){
-        return Plant("Blueberry", Color.Blue)
-    }else return Plant("String Beans", Color.Green)
+        return Plant("Blueberry", Color.Blue,R.drawable.blueberry)
+    }else return Plant("String Beans", Color.Green, R.drawable.string_beans)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Plotter() {
-    val curPlant = remember{ mutableStateOf(Plant("Tomato", Color.Red)) }
+    val curPlant = remember{ mutableStateOf(Plant("Tomato", Color.Red,R.drawable.tomato)) }
     val boxes = remember {
         mutableStateListOf<Box>()
     }
-    var colorState by remember { mutableStateOf(Color.Red) }
+    var plantState by remember { mutableIntStateOf(R.drawable.tomato) }
 
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
@@ -108,7 +111,7 @@ fun Plotter() {
             ) {
                 Button(onClick = {
                     val tempPlant = plantCycleReverse(curPlant.value); curPlant.value.plantType =
-                    tempPlant.plantType; curPlant.value.color = tempPlant.color; colorState = tempPlant.color
+                    tempPlant.plantType; curPlant.value.color = tempPlant.color; plantState = tempPlant.plantImageid
                 }) { }
 
                 Box(
@@ -121,23 +124,25 @@ fun Plotter() {
                                 element = Box(
                                     offsetX,
                                     offsetY,
-                                    Plant(curPlant.value.plantType, curPlant.value.color)
+                                    Plant(curPlant.value.plantType, curPlant.value.color, curPlant.value.plantImageid)
                                 )
                             )
                         })
                 ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        drawCircle(color = colorState, radius = size.minDimension / 3f)
-                    }}
+                    Image(
+                        painter = painterResource(id = plantState),
+                        contentDescription = curPlant.value.plantType,
+                        modifier = Modifier.fillMaxSize()
+                    )}
                     Button(onClick = {
                         val tempPlant = plantCycle(curPlant.value); curPlant.value.plantType =
-                        tempPlant.plantType; curPlant.value.color = tempPlant.color; colorState = tempPlant.color
+                        tempPlant.plantType; curPlant.value.color = tempPlant.color; plantState = tempPlant.plantImageid
                     }) { }
 
             }
         }
         boxes.forEach { box ->
-            DraggableBox(box.offsetX, box.offsetY, box.plant.color)
+            DraggableBox(box.offsetX, box.offsetY, box.plant)
         }
     }
 }
