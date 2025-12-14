@@ -11,6 +11,24 @@ Our goal is to help users plan, care for, and track their plants based on key fa
 
 Just boot up the app, log in, take a picture of your seed packet, and you're ready to go !
 
+**VERDANTLY API KEY REQUIRED, THERE IS A FREE TIER IF YOU WISH TO TEST OUT THE APP **
+
+
+* On the website: Go to this website to start your free trial and access an api key: https://rapidapi.com/verdantly-team-verdantly-team-default/api/verdantly-gardening-api
+    * Once on the website, go to the left hand side bar and look under plant varieties.
+    * Select any of the options
+    * Once you selected an option, you should see an area to the right that says Code Snippets
+    * Pick Kotlin as your target
+    * Below you should see a block of code, in there you will see "x-rapidapi-key" and "x-rapidapi-host
+    * Copy those values assigned to those properties and put them into your local.properties file as shown below
+
+
+
+* In the code:
+    * Under Gradle Scripts folder, go to local.properties and put in 2 variables: *RAPID_API_KEY=(your api)*, and *RAPID_API_HOST= verdantly-gardening-api.p.rapidapi.com*
+    * dont wrap these variables in quotes and you should be good to go :)
+     
+
 ---
 
 ## The Team
