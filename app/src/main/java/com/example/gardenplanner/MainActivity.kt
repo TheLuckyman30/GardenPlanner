@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.Navbar
 import com.example.gardenplanner.app_ui.components.Sidebar
 import com.example.gardenplanner.app_ui.components.popups.CameraConfirm
+import com.example.gardenplanner.app_ui.components.popups.CreateNotification
 import com.example.gardenplanner.app_ui.components.popups.Loading
 import com.example.gardenplanner.app_ui.components.popups.Login
 import com.example.gardenplanner.app_ui.components.popups.Profile
@@ -106,7 +107,8 @@ class MainActivity : ComponentActivity() {
                                 userPlants,
                                 userNotifications,
                                 addNotification = { newNotification -> userNotifications += newNotification },
-                                removeNotification = { notification -> userNotifications -= notification }
+                                removeNotification = { notification -> userNotifications -= notification },
+                                openForm = { currentPopup = Popup.CreateNotification }
                             )
                             Screen.PlotterPage -> Plotter()
                         }
@@ -155,6 +157,9 @@ class MainActivity : ComponentActivity() {
                         navIndividual = { currentScreen = Screen.IndividualInfoPage }
                     )
                     Popup.Loading -> Loading()
+                    Popup.CreateNotification -> CreateNotification(
+                        close = { currentPopup = null }
+                    )
                 }
 
                 // Effects (Similar to useEffect if you used React before)

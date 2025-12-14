@@ -6,4 +6,5 @@ sealed class Popup {
     data object Profile: Popup()
     data object CameraConfirm: Popup()
     data object Loading: Popup()
+    data object CreateNotification: Popup()
 }

@@ -3,8 +3,10 @@ package com.example.gardenplanner.app_ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,13 +32,14 @@ fun generateNotification(plant: Plant): Notification {
     }
     val newTime = ZonedDateTime.now()
     val addedTime = newTime.plusDays(newInterval)
-    return Notification(plant, addedTime, newInterval)
+    return Notification(plant, plant.name, addedTime, newInterval)
 }
 
 @Composable
 fun NotificationNav(userPlants: List<Plant>,
                     userNotifications: List<Notification>,
-                    addNotification: (Notification) -> Unit) {
+                    addNotification: (Notification) -> Unit,
+                    openForm: () -> Unit) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .padding(top = 10.dp),
@@ -62,7 +65,17 @@ fun NotificationNav(userPlants: List<Plant>,
                         style = TextStyle(
                             color = Color.White,
                             fontWeight = FontWeight.Bold
-                        ))
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.width(15.dp))
+                TextButton(onClick = openForm) {
+                    Text("Create",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
                 }
             }
         }
