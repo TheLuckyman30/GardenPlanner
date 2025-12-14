@@ -62,27 +62,42 @@ private fun DraggableBox(offX: Float, offy: Float, plant: Plant, sizeMod: Double
 }
 
 data class Plant(var plantType: String, var color: Color, var plantImageid: Int)
-data class Box(val offsetX: Float, val offsetY: Float, val plant: Plant, val sizeMod: Double)
+data class Box(val offsetX: Float, val offsetY: Float, var plant: Plant, val sizeMod: Double)
 
 
 fun plantCycle(inPlant: Plant): Plant {
-    if(inPlant.plantType == "Tomato"){
+    if (inPlant.plantType == "Tomato") {
         return Plant("Blueberry", Color.Blue, R.drawable.blueberry)
-    }else if(inPlant.plantType == "Blueberry"){
+    } else if (inPlant.plantType == "Blueberry") {
         return Plant("String Beans", Color.Green, R.drawable.string_beans)
-    }else if(inPlant.plantType == "String Beans"){
+    } else if (inPlant.plantType == "String Beans") {
         return Plant("Carrot", Color(0xFFFF9736), R.drawable.carrot)
+    } else if (inPlant.plantType == "Carrot") {
+        return  Plant("Empty", Color.Transparent, R.drawable.empty)
     }else return(Plant("Tomato", Color.Red,  R.drawable.tomato))
 }
 
 fun plantCycleReverse(inPlant: Plant): Plant {
     if(inPlant.plantType == "Tomato"){
-        return Plant("Carrot", Color(0xFFFF9736), R.drawable.carrot)
+        return Plant("Empty", Color.Transparent, R.drawable.empty)
     }else if(inPlant.plantType == "Blueberry"){
         return (Plant("Tomato", Color.Red,R.drawable.tomato))
     }else if(inPlant.plantType == "String Beans"){
         return Plant("Blueberry", Color.Blue,R.drawable.blueberry)
-    }else return Plant("String Beans", Color.Green, R.drawable.string_beans)
+    } else if (inPlant.plantType == "Carrot") {
+        return  Plant("String Beans", Color.Green, R.drawable.string_beans)
+    }else return Plant("Carrot", Color(0xFFFF9736), R.drawable.carrot)
+}
+
+fun autoGen(inBox: Box): Plant{
+    if (inBox.plant.plantType == "Empty"){
+        val ranum = (1..4).random()
+        if(ranum == 1){return(Plant("Tomato", Color.Red,  R.drawable.tomato))}
+        else if(ranum == 2){return Plant("Blueberry", Color.Blue, R.drawable.blueberry)}
+        else if(ranum == 3){return Plant("String Beans", Color.Green, R.drawable.string_beans)}
+        else {return Plant("Carrot", Color(0xFFFF9736), R.drawable.carrot)}
+    }
+    return inBox.plant
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,7 +109,7 @@ fun Plotter() {
         mutableStateListOf<Box>()
     }
     var plantState by remember { mutableIntStateOf(R.drawable.tomato) }
-    var sizeMod: Double = 1.0
+    var sizeMod = 1.0
 
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
@@ -149,6 +164,11 @@ fun Plotter() {
                 }
             }
         }
+        Button(onClick = {boxes.forEach {box -> box.plant = autoGen(box)}
+            boxes.add(Box(offsetX,offsetY, Plant(curPlant.value.plantType, curPlant.value.color, curPlant.value.plantImageid), sizeMod = sizeMod))
+            boxes.removeAt(boxes.lastIndex)
+        }) { }
+
         boxes.forEach { box ->
             DraggableBox(box.offsetX, box.offsetY, box.plant, box.sizeMod)
         }
