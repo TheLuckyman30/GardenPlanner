@@ -1,8 +1,8 @@
-# Verdantly Garden Planner
+# GardenPlotPlanner
 
 ## Overview
 
-Verdantly is a gardening assistant app designed to simplify plant care and garden planning for users of all experience levels. The app scans seed packets to extract planting information and combines it with data from the **Verdantly API** to provide accurate, personalized gardening advice.
+GardenPlotPlanner is a gardening assistant app designed to simplify plant care and garden planning for users of all experience levels. The app scans seed packets to extract planting information and combines it with data from the **Verdantly API** to provide accurate, personalized gardening advice.
 
 Our goal is to help users plan, care for, and track their plants based on key factors such as environment, plant type, available space, water requirements, sunlight needs, and growth trends.
 
@@ -16,7 +16,7 @@ The primary goals of this project are:
   Scan seed packets to automatically retrieve planting and care information.
 
 * **Personalized Planting Advice**
-  Use data from the Verdantly API to recommend optimal planting layouts and care strategies based on:
+  Recommend optimal planting layouts and care strategies based on:
 
   * Environment
   * Plant type
@@ -57,7 +57,7 @@ While there are gardening apps with overlapping features, none of the researched
 * Notifications and timers
 * Automatic garden plot generation
 
-Verdantly aims to unify these features into a single, easy-to-use application.
+GardenPlotPlanner aims to unify these features into a single, easy-to-use application.
 
 ---
 
@@ -65,7 +65,7 @@ Verdantly aims to unify these features into a single, easy-to-use application.
 
 ### Novice Gardeners
 
-Casual or beginner gardeners who may not know how to read seed packets or understand planting schedules. Verdantly helps them learn the basics, including:
+Casual or beginner gardeners who may not know how to read seed packets or understand planting schedules. GardenPlotPlanner helps them learn the basics, including:
 
 * Planting seasons
 * Watering schedules
@@ -82,19 +82,19 @@ Hobbyists who are highly invested in gardening and already understand plant care
 
 ### Former Gardeners
 
-Users who previously gardened but stopped due to specific pain points (e.g., time management, forgetfulness, complexity). Verdantly aims to address these issues and help them re-engage with gardening.
+Users who previously gardened but stopped due to specific pain points (e.g., time management, forgetfulness, complexity). GardenPlotPlanner aims to address these issues and help them re-engage with gardening.
 
 ---
 
 ## Why These Users
 
-We selected these target groups because Verdantly provides clear value to each:
+We selected these target groups because GardenPlotPlanner provides clear value to each:
 
 * **Novice gardeners** gain guided learning and confidence
 * **Experienced gardeners** save time and effort
 * **Former gardeners** receive targeted support to overcome past frustrations
 
-By addressing both educational and organizational needs, Verdantly makes gardening more accessible, efficient, and enjoyable for everyone.
+By addressing both educational and organizational needs, GardenPlotPlanner makes gardening more accessible, efficient, and enjoyable for everyone.
 
 ---
 
