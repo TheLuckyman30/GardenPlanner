@@ -7,6 +7,27 @@ GardenPlotPlanner is a gardening assistant app designed to simplify plant care a
 Our goal is to help users plan, care for, and track their plants based on key factors such as environment, plant type, available space, water requirements, sunlight needs, and growth trends.
 
 ---
+## Instructions
+
+Just boot up the app, log in, take a picture of your seed packet, and you're ready to go !
+
+---
+
+## The Team
+
+* **Selin Bacaz:**
+    * Product Manager, Frontend & Lead UI/UX developer
+ 
+* **Brandon Nauta:**
+    * Frontend Engineer and UI/UX developer
+      
+* **Ryan Dahlke:**
+    * Frontend Engineer & quality assurance
+
+* **Ricky Kiamilev:**
+    * Frontend developer
+      
+---
 
 ## Project Goals
 
