@@ -11,7 +11,7 @@ Our goal is to help users plan, care for, and track their plants based on key fa
 
 Just boot up the app, log in, take a picture of your seed packet, and you're ready to go !
 
-**VERDANTLY API KEY REQUIRED, THERE IS A FREE TIER IF YOU WISH TO TEST OUT THE APP **
+**VERDANTLY API KEY REQUIRED, THERE IS A FREE TIER IF YOU WISH TO TEST OUT THE APP**
 
 
 * On the website: Go to this website to start your free trial and access an api key: https://rapidapi.com/verdantly-team-verdantly-team-default/api/verdantly-gardening-api
