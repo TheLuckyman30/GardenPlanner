@@ -66,11 +66,13 @@ fun NotificationCard(notification: Notification,
                 fontSize = 14.sp,
                 color = Color(0xFF1B3B2F)
             )
-            Text(
-                text = "💧 Water in ${notification.interval} day(s)",
-                fontSize = 14.sp,
-                color = Color(0xFF1B3B2F)
-            )
+            if (notification.interval != null) {
+                Text(
+                    text = "💧 Water in ${notification.interval} day(s)",
+                    fontSize = 14.sp,
+                    color = Color(0xFF1B3B2F)
+                )
+            }
         }
     }
 }

@@ -38,25 +38,34 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.gardenplanner.utils.classes.Notification
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+fun generateManualNotification(name: String, date: ZonedDateTime): Notification {
+    return Notification(name = name, nextDate =  date, plant = null, interval = null)
+}
 
 @Composable
-fun CreateNotification(close: () -> Unit) {
+fun CreateNotification(close: () -> Unit,
+                       addNotification: (Notification) -> Unit) {
     CustomPopup(
         popupWidth = 355F,
         popupHeight = 355F,
         onClickOutside = close,
         bgColor = Color(0xFF9CC7B9),
         padding = 5F,
-        content = { CreateNotificationContent(close) }
+        content = { CreateNotificationContent(close, addNotification) }
     )
 }
 
 @Composable
-fun CreateNotificationContent(close: () -> Unit) {
+fun CreateNotificationContent(close: () -> Unit,
+                              addNotification: (Notification) -> Unit) {
     var name by remember { mutableStateOf("") }
     var date by remember { mutableStateOf<ZonedDateTime>(ZonedDateTime.now()) }
     var showDatePicker by remember { mutableStateOf(false) }
+    val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy, h:mm a")
 
     Column {
         Box(modifier = Modifier
@@ -106,7 +115,11 @@ fun CreateNotificationContent(close: () -> Unit) {
             .background(color = Color.White, shape = RoundedCornerShape(size = 8.56821.dp))
             .padding(start = 8.875.dp, top = 8.875.dp, end = 8.875.dp, bottom = 8.875.dp),
             verticalAlignment = Alignment.CenterVertically) {
-            Text("Date",
+            Text("Date: ",
+                fontWeight = FontWeight(500),
+                color = Color(0xFF2F7564))
+            Text("${date.format(formatter)}",
+                fontSize = 15.sp,
                 fontWeight = FontWeight(500),
                 color = Color(0xFF2F7564))
             Spacer(modifier = Modifier.width(10.dp))
@@ -139,7 +152,11 @@ fun CreateNotificationContent(close: () -> Unit) {
                     .height(31.85.dp)
                     .background(color = Color(0xFF2F7564), shape = RoundedCornerShape(size = 16.85.dp))
                     .padding(start = 8.425.dp, top = 8.425.dp, end = 8.425.dp, bottom = 8.425.dp)
-                    .clickable(onClick = {}),
+                    .clickable(onClick = {
+                        val newNotification = generateManualNotification(name, date)
+                        addNotification(newNotification)
+                        close()
+                    }),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("Create",

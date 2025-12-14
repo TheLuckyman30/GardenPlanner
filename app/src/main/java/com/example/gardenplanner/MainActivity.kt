@@ -158,7 +158,8 @@ class MainActivity : ComponentActivity() {
                     )
                     Popup.Loading -> Loading()
                     Popup.CreateNotification -> CreateNotification(
-                        close = { currentPopup = null }
+                        close = { currentPopup = null },
+                        addNotification = { newNotification -> userNotifications += newNotification }
                     )
                 }
 
