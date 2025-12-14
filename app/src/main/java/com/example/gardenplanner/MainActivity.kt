@@ -100,7 +100,8 @@ class MainActivity : ComponentActivity() {
                             Screen.NotificationsPage -> Notifications(
                                 userPlants,
                                 userNotifications,
-                                addNotification = { newNotification -> userNotifications += newNotification }
+                                addNotification = { newNotification -> userNotifications += newNotification },
+                                removeNotification = { notification -> userNotifications -= notification }
                             )
                             Screen.PlotterPage -> Plotter()
                         }

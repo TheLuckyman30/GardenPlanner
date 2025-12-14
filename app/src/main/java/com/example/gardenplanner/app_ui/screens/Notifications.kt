@@ -27,7 +27,8 @@ import com.example.gardenplanner.utils.classes.Plant
 @Composable
 fun Notifications(userPlants: List<Plant>,
                   userNotifications: List<Notification>,
-                  addNotification: (Notification) -> Unit) {
+                  addNotification: (Notification) -> Unit,
+                  removeNotification: (Notification) -> Unit) {
     Scaffold(
         topBar = { NotificationNav(
             userPlants,
@@ -48,7 +49,7 @@ fun Notifications(userPlants: List<Plant>,
                 contentAlignment = Alignment.Center) {
                 Column(Modifier.fillMaxWidth(0.9F)) {
                     userNotifications.forEach { notification ->
-                        NotificationCard(notification)
+                        NotificationCard(notification, removeNotification)
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                 }
