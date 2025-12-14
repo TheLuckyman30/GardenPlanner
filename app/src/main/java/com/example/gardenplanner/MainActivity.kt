@@ -28,6 +28,7 @@ import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
 import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
 import com.example.gardenplanner.utils.classes.GardenAdiveViewModel
+import com.example.gardenplanner.utils.classes.GardenBox
 import com.example.gardenplanner.utils.classes.Notification
 import com.example.gardenplanner.utils.classes.Plant
 import com.example.gardenplanner.utils.classes.availablePlants
@@ -45,13 +46,14 @@ class MainActivity : ComponentActivity() {
                 val adviceState = GardenAdiveViewModel()
                 var recognizedText by remember { mutableStateOf("") }
                 var extractedPlant by remember { mutableStateOf<Plant?>(null) }
-                var userPlants by remember { mutableStateOf(DefaultPlantsAdvice) }
+                var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
                 var selectedPlant by remember { mutableStateOf<Plant?>(null) }
 
                 //Notifications
                 var userNotifications by remember { mutableStateOf(emptyList<Notification>()) }
 
                 // Plotter
+                var gardenBoxes by remember { mutableStateOf(emptyList<GardenBox>()) }
 
                 // Navigation
                 var currentScreen by remember { mutableStateOf<Screen>(Screen.LandingPage) }
@@ -110,7 +112,13 @@ class MainActivity : ComponentActivity() {
                                 removeNotification = { notification -> userNotifications -= notification },
                                 openForm = { currentPopup = Popup.CreateNotification }
                             )
-                            Screen.PlotterPage -> Plotter()
+                            Screen.PlotterPage -> Plotter(
+                                userPlants,
+                                gardenBoxes,
+                                addBox = { newBox -> gardenBoxes += newBox },
+                                setBoxes = { newBoxes -> gardenBoxes = newBoxes},
+                                resetBoxes = { gardenBoxes = emptyList() }
+                            )
                         }
                     }
                 }
