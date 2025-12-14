@@ -31,12 +31,14 @@ import com.example.gardenplanner.utils.classes.Plant
 fun Notifications(userPlants: List<Plant>,
                   userNotifications: List<Notification>,
                   addNotification: (Notification) -> Unit,
-                  removeNotification: (Notification) -> Unit) {
+                  removeNotification: (Notification) -> Unit,
+                  openForm: () -> Unit) {
     Scaffold(
         topBar = { NotificationNav(
             userPlants,
             userNotifications,
-            addNotification
+            addNotification,
+            openForm
         ) }
     ) {
         if (userNotifications.isNotEmpty()) {
