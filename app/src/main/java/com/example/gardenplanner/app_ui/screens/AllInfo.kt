@@ -1,12 +1,15 @@
 package com.example.gardenplanner.app_ui.screens
 
+import android.R.color.black
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -17,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
 import com.example.gardenplanner.app_ui.components.PlantCard
 import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
@@ -30,7 +34,7 @@ fun AllInfo(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MintGreen // background like screenshot
+        color = White // background like screenshot
     ) {
         Column {
 
@@ -39,10 +43,18 @@ fun AllInfo(
                 modifier = Modifier
                     .padding(20.dp)
                     .fillMaxWidth()
+                    .height(60.dp)
                     .background(Color.White, RoundedCornerShape(30.dp))
-                    .padding(horizontal = 20.dp, vertical = 12.dp)
+                    .border(
+                        width = 2.dp,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(30.dp)
+                    )
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
