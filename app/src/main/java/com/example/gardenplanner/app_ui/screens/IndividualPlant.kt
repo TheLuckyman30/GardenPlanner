@@ -35,6 +35,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.createBitmap
 
@@ -166,7 +168,7 @@ fun IndividualInfo(selectedPlant: Plant?) {
 
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         color = White
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -210,7 +212,7 @@ fun IndividualInfo(selectedPlant: Plant?) {
                 Box(
                     modifier = Modifier
                         .size(160.dp)
-                        .offset(y = -60.dp) // pushes it into the green shape
+                        .offset(y = (-60).dp) // pushes it into the green shape
                         .background(
                             color = White,
                             shape = CircleShape
@@ -239,7 +241,7 @@ fun IndividualInfo(selectedPlant: Plant?) {
                         contentDescription = "Save",
                         tint = TextDark
                     )
-                    Toast.makeText(context, "Saved to Gallery 🌱", Toast.LENGTH_SHORT).show()
+                    // TEMP DISABLED Toast.makeText(context, "Saved to Gallery 🌱", Toast.LENGTH_SHORT).show()
 
                 }
             }
@@ -288,8 +290,8 @@ fun IndividualInfo(selectedPlant: Plant?) {
 
                 ) {
                     InfoChip("☀️", "Sun", selectedPlant.growingRequirements.sunlightRequirement)
-                    InfoChip("💧", "Water", "Every ${selectedPlant.growingRequirements.waterRequirement} days")
-                    InfoChip("🌾", "Harvest", "${selectedPlant.growthDetails.growthPeriod} days")
+                    InfoChip("💧", "Water", selectedPlant.growingRequirements.waterRequirement)
+                    InfoChip("🌾", "Harvest", selectedPlant.growthDetails.growthPeriod)
 
                 }
                 Box(
