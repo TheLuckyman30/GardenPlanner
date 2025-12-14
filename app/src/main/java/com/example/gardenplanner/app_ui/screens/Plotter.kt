@@ -23,6 +23,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -67,18 +68,21 @@ fun Plotter(userPlants: List<Plant>,
             "blueberry" to R.drawable.blueberry,
             "string_beans" to R.drawable.string_beans
         )
-        val allPlants: List<PlotterPlant> = userPlants.map { plant ->
-            val image = imageMap[plant.type.lowercase()]
-            if (image != null) {
-                PlotterPlant(plant, image)
-            } else {
-                val randInt = (0..3).random()
-                PlotterPlant(plant, images[randInt])
+        val allPlants by remember { mutableStateOf(
+            userPlants.map { plant ->
+                val image = imageMap[plant.type.lowercase()]
+                if (image != null) {
+                    PlotterPlant(plant, image)
+                } else {
+                    val randInt = (0..3).random()
+                    PlotterPlant(plant, images[randInt])
+                }
             }
-        }
+        ) }
         var currentPlant by remember { mutableStateOf(allPlants[0]) }
+        var currentIndex by remember { mutableIntStateOf(0) }
         var sizeMod = 1.0
-        var currentIndex = 0
+
 
         Scaffold (
             modifier = Modifier.fillMaxSize().background(Color.White),
