@@ -56,4 +56,34 @@ data class PlantingInstructions(
 )
 
 
-val availablePlants = listOf("Tomato", "Corn", "Spinach")
+val availablePlants = listOf(
+    // Vegetables
+    "Tomato", "Spinach", "Carrot", "Broccoli", "Lettuce", "Bell Pepper",
+    "Cabbage", "Cauliflower", "Kale", "Zucchini", "Cucumber", "Eggplant",
+    "Radish", "Beetroot", "Celery", "Asparagus", "Brussels Sprouts", "Okra",
+    "Leek", "Turnip", "Parsnip", "Pumpkin", "Sweet Potato", "Garlic",
+
+    // Fruits
+    "Apple", "Strawberry", "Blueberry", "Mango", "Watermelon", "Peach",
+    "Pear", "Cherry", "Grapes", "Pineapple", "Banana", "Orange",
+    "Lemon", "Lime", "Plum", "Apricot", "Raspberry", "Blackberry",
+    "Kiwi", "Pomegranate", "Cantaloupe", "Papaya", "Cranberry", "Fig",
+
+    // Flowers
+    "Rose", "Tulip", "Sunflower", "Daisy", "Lily", "Orchid",
+    "Marigold", "Daffodil", "Lavender", "Peony", "Chrysanthemum", "Hibiscus",
+    "Magnolia", "Gardenia", "Begonia", "Petunia", "Camellia", "Iris",
+    "Hydrangea", "Fuchsia", "Violet", "Pansy", "Carnation", "Snapdragon",
+
+    // More Vegetables
+    "Arugula", "Bok Choy", "Swiss Chard", "Mustard Greens", "Watercress", "Rutabaga",
+    "Kohlrabi", "Endive", "Radicchio", "Chayote", "Fennel", "Ginger",
+
+    // More Fruits
+    "Guava", "Lychee", "Dragon Fruit", "Starfruit", "Jackfruit", "Mulberry",
+    "Tangerine", "Clementine", "Nectarine", "Passion Fruit", "Persimmon", "Quince",
+
+    // More Flowers
+    "Aster", "Calendula", "Cosmos", "Snapdragon", "Foxglove", "Bluebell",
+    "Petunia", "Sweet Pea", "Morning Glory", "Zinnia", "Gladiolus", "Coneflower"
+)
