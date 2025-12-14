@@ -35,7 +35,7 @@ fun PlantCard(plant: Plant,
             .padding(10.dp)
         ) {
             Text(plant.name, style = cardTextStyle())
-            Text(plant.growingRequirements.sunlightRequirement, style = cardTextStyle())
+            Text(plant.growingRequirements.sunlightRequirement , style = cardTextStyle())
             Text(plant.growingRequirements.waterRequirement, style = cardTextStyle())
         }
     }

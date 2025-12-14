@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -11,6 +13,19 @@ android {
     }
 
     defaultConfig {
+
+        buildConfigField(
+            "String",
+            "RAPID_API_KEY",
+            "\"${gradleLocalProperties(rootDir, providers).getProperty("RAPID_API_KEY")}\""
+        )
+
+        buildConfigField(
+            "String",
+            "RAPID_API_HOST",
+            "\"${gradleLocalProperties(rootDir, providers).getProperty("RAPID_API_HOST")}\""
+        )
+
         applicationId = "com.example.gardenplanner"
         minSdk = 24
         targetSdk = 36
@@ -38,6 +53,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
