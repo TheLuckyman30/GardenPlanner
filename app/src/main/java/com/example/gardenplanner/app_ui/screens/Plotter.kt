@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,7 +34,7 @@ import com.example.gardenplanner.R
 import kotlin.math.roundToInt
 
 @Composable
-private fun DraggableBox(offX: Float, offy: Float, plant: Plant) {
+private fun DraggableBox(offX: Float, offy: Float, plant: Plant, sizeMod: Double) {
     Box(modifier = Modifier.fillMaxSize()) {
         var offsetX by remember { mutableFloatStateOf(offX) }
         var offsetY by remember { mutableFloatStateOf(offy) }
@@ -42,7 +43,7 @@ private fun DraggableBox(offX: Float, offy: Float, plant: Plant) {
             Modifier
                 .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
                 .background(color = Color(0xFFF7FFFC))
-                .size(100.dp)
+                .size((100*sizeMod).dp)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
                         change.consume()
@@ -61,7 +62,7 @@ private fun DraggableBox(offX: Float, offy: Float, plant: Plant) {
 }
 
 data class Plant(var plantType: String, var color: Color, var plantImageid: Int)
-data class Box(val offsetX: Float, val offsetY: Float, val plant: Plant)
+data class Box(val offsetX: Float, val offsetY: Float, val plant: Plant, val sizeMod: Double)
 
 
 fun plantCycle(inPlant: Plant): Plant {
@@ -93,25 +94,29 @@ fun Plotter() {
         mutableStateListOf<Box>()
     }
     var plantState by remember { mutableIntStateOf(R.drawable.tomato) }
+    var sizeMod: Double = 1.0
 
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
 
     Scaffold {
-
-
         BottomAppBar(modifier = Modifier.height(150.dp)) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth() // Makes the Row take up the full available width
-                    .padding(16.dp), // Adds some padding around the buttons
-                horizontalArrangement = Arrangement.SpaceEvenly // Distributes space evenly between buttons
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = {
-                    val tempPlant = plantCycleReverse(curPlant.value); curPlant.value.plantType =
-                    tempPlant.plantType; curPlant.value.color = tempPlant.color; curPlant.value.plantImageid = tempPlant.plantImageid; plantState = tempPlant.plantImageid
-                }) { }
-
+                Column {
+                    Button(onClick = {
+                        val tempPlant =
+                            plantCycleReverse(curPlant.value); curPlant.value.plantType =
+                        tempPlant.plantType; curPlant.value.color =
+                        tempPlant.color; curPlant.value.plantImageid =
+                        tempPlant.plantImageid; plantState = tempPlant.plantImageid
+                    }) { }
+                    Button(onClick = {if(sizeMod > 0.5){sizeMod = sizeMod - 0.1} }) { }
+                }
                 Box(
                     Modifier
                         .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
@@ -122,7 +127,8 @@ fun Plotter() {
                                 element = Box(
                                     offsetX,
                                     offsetY,
-                                    Plant(curPlant.value.plantType, curPlant.value.color, curPlant.value.plantImageid)
+                                    Plant(curPlant.value.plantType, curPlant.value.color, curPlant.value.plantImageid),
+                                    sizeMod = sizeMod
                                 )
                             )
                         })
@@ -132,15 +138,19 @@ fun Plotter() {
                         contentDescription = curPlant.value.plantType,
                         modifier = Modifier.fillMaxSize()
                     )}
+                Column {
                     Button(onClick = {
                         val tempPlant = plantCycle(curPlant.value); curPlant.value.plantType =
-                        tempPlant.plantType; curPlant.value.color = tempPlant.color;curPlant.value.plantImageid = tempPlant.plantImageid; plantState = tempPlant.plantImageid
+                        tempPlant.plantType; curPlant.value.color =
+                        tempPlant.color;curPlant.value.plantImageid =
+                        tempPlant.plantImageid; plantState = tempPlant.plantImageid
                     }) { }
-
+                    Button(onClick = {if(sizeMod < 1.5){sizeMod = sizeMod+0.1}}) { }
+                }
             }
         }
         boxes.forEach { box ->
-            DraggableBox(box.offsetX, box.offsetY, box.plant)
+            DraggableBox(box.offsetX, box.offsetY, box.plant, box.sizeMod)
         }
     }
 }
