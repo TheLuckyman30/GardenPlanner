@@ -28,8 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
@@ -241,7 +243,7 @@ fun Plotter(userPlants: List<Plant>,
                         Text("Clear")
                     }
                 }
-                Box(modifier = Modifier.fillMaxSize().background(Color(0xFF8D4B35))) {}
+                Box(modifier = Modifier.fillMaxSize().paint(painterResource(R.drawable.soil), contentScale = ContentScale.FillBounds)) {}
             }
             gardenBoxes.forEach { gardenBox ->
                 DraggableBox(gardenBox)

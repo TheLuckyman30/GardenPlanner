@@ -113,7 +113,7 @@ fun CameraConfirmContent(navIndividual: () -> Unit,
                 .clickable(onClick = { close(); addUserPlant(); setSelectedPlant(); resetExtractedPlant(); navIndividual() }),
                 contentAlignment = Alignment.Center
             ) {
-                Text("See Info",
+                Text("Add",
                     style = TextStyle(
                         fontSize = 12.64.sp,
                         fontWeight = FontWeight(500),
