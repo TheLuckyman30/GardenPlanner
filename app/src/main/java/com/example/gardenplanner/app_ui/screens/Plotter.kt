@@ -119,9 +119,13 @@ fun Plotter() {
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
 
-    Scaffold {
-        Column {
-            BottomAppBar(modifier = Modifier.background(Color(0xFFF7FFFC)).height(150.dp)) {
+    Scaffold (
+        modifier = Modifier.fillMaxSize().background(Color.White),
+        bottomBar = {
+            Box(modifier = Modifier
+                .background(Color(0xFFFFFFFF))
+                .height(150.dp)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -160,7 +164,7 @@ fun Plotter() {
                     Box(
                         Modifier
                             .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-                            .background(color = Color(0xFFF7FFFC))
+                            .background(color = Color(0xFFFFFFFF))
                             .size(100.dp)
                             .clickable(onClick = {
                                 boxes.add(
@@ -212,14 +216,14 @@ fun Plotter() {
                     }
                 }
             }
-                Canvas(
-                    Modifier.weight(1f).fillMaxSize().background(Color(0xFF294A42))
-                ) {}
+        }
+    ) {
+        Column {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly) {
-
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 FilledTonalButton(
                     onClick = {
                         boxes.forEach { box -> box.plant = autoGen(box) }
@@ -240,8 +244,11 @@ fun Plotter() {
                         containerColor = Color(0xFF2F7564),
                         contentColor = Color.White
                     )
-                ) { Text("Auto Fill") }
+                ) {
+                    Text("Auto Fill")
+                }
             }
+            Box(modifier = Modifier.fillMaxSize().background(Color.Blue)) {}
         }
         boxes.forEach { box ->
             DraggableBox(box.offsetX, box.offsetY, box.plant, box.sizeMod)
