@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -15,6 +17,19 @@ android {
     }
 
     defaultConfig {
+
+        buildConfigField(
+            "String",
+            "RAPID_API_KEY",
+            "\"${gradleLocalProperties(rootDir, providers).getProperty("RAPID_API_KEY")}\""
+        )
+
+        buildConfigField(
+            "String",
+            "RAPID_API_HOST",
+            "\"${gradleLocalProperties(rootDir, providers).getProperty("RAPID_API_HOST")}\""
+        )
+
         applicationId = "com.example.gardenplanner"
         minSdk = 24
         targetSdk = 36
@@ -42,6 +57,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -63,11 +79,16 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     // CameraX
     implementation("androidx.camera:camera-camera2:1.3.0")
     implementation("androidx.camera:camera-lifecycle:1.3.0")
     implementation("androidx.camera:camera-view:1.3.0")
     implementation("androidx.camera:camera-extensions:1.3.0")
-// ML Kit Text Recognition
+
+    // ML Kit Text Recognition
     implementation("com.google.mlkit:text-recognition:16.0.0")
 }

@@ -25,8 +25,9 @@ import com.example.gardenplanner.app_ui.components.popups.Signup
 import com.example.gardenplanner.app_ui.screens.*
 import com.example.gardenplanner.navigation.Popup
 import com.example.gardenplanner.navigation.Screen
-import com.example.gardenplanner.utils.classes.DefaultPlantsAdvice
+import com.example.gardenplanner.utils.classes.GardenAdiveViewModel
 import com.example.gardenplanner.utils.classes.Plant
+import com.example.gardenplanner.utils.classes.availablePlants
 import kotlin.collections.emptyList
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 // State Variables
+                val adviceState = GardenAdiveViewModel()
                 var recognizedText by remember { mutableStateOf("") }
                 var extractedPlant by remember { mutableStateOf<Plant?>(null) }
                 var userPlants by remember { mutableStateOf(emptyList<Plant>()) }
@@ -138,10 +140,18 @@ class MainActivity : ComponentActivity() {
                 LaunchedEffect(recognizedText) {
                     if (recognizedText != "") {
                         val text = recognizedText.split("\n")
-                        extractedPlant = DefaultPlantsAdvice.firstOrNull { plant ->
-                            text.any { t -> t.lowercase().trim() == plant.name.lowercase() }
+                        val plant = availablePlants.firstOrNull { plant ->
+                            text.any { t -> t.lowercase().trim() == plant.lowercase() }
                         }
-                        currentPopup = Popup.CameraConfirm
+                        if (plant != null) {
+                            adviceState.fetchGardenAdvice(
+                                q= plant,
+                                setPopup = { newPopup -> currentPopup = newPopup },
+                                setPlant = { newPlant -> extractedPlant = newPlant }
+                            )
+                        } else {
+                            currentPopup = Popup.CameraConfirm
+                        }
                     }
                 }
             }

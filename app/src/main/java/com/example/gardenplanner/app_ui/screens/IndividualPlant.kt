@@ -287,9 +287,9 @@ fun IndividualInfo(selectedPlant: Plant?) {
                     horizontalArrangement = Arrangement.SpaceBetween
 
                 ) {
-                    InfoChip("☀️", "Sun", selectedPlant.sunlight)
-                    InfoChip("💧", "Water", "Every ${selectedPlant.wateringInterval} days")
-                    InfoChip("🌾", "Harvest", "${selectedPlant.harvestTime} days")
+                    InfoChip("☀️", "Sun", selectedPlant.growingRequirements.sunlightRequirement)
+                    InfoChip("💧", "Water", "Every ${selectedPlant.growingRequirements.waterRequirement} days")
+                    InfoChip("🌾", "Harvest", "${selectedPlant.growthDetails.growthPeriod} days")
 
                 }
                 Box(
@@ -313,7 +313,7 @@ fun IndividualInfo(selectedPlant: Plant?) {
                     ) {
                         InfoCard(
                             title = "Description",
-                            content = selectedPlant.summary
+                            content = selectedPlant.description
 
                         )
 
