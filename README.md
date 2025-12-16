@@ -6,6 +6,8 @@ GardenPlotPlanner is a gardening assistant app designed to simplify plant care a
 
 Our goal is to help users plan, care for, and track their plants based on key factors such as environment, plant type, available space, water requirements, sunlight needs, and growth trends.
 
+Click here to watch our design process: https://youtu.be/8y7Pyw7kGuI
+
 ---
 ## Instructions
 
